@@ -16,7 +16,7 @@
 - a specific piece of Information with a particular word/phrase in its description; or
 - any folders within a particular subfolder (or along a particular subfolder path).
 
-4. Responds to changes in your folders made outsid the app (ie in Windows Explorer), for example: 
+4. Responds to changes in your folders made outside the app (ie in Windows Explorer), for example: 
 - placement of files and documents in your folders; and
 - relocating/deleting/copying subfolders or files.
 
