@@ -42,8 +42,8 @@ namespace Remember
         /// <summary>
         /// Constructor
         /// </summary>
-        public Host() 
-        { 
+        public Host()
+        {
             InitializeComponent();
             userSettingsFolder = $"C:\\Users\\{Environment.UserName}\\AppData\\Local\\{RefConsts.cstrAppDataFolderName}";
             InitializeTipText();
@@ -125,7 +125,7 @@ namespace Remember
         private void GetUserSettings()
         {
             string jsnSettings = "";
-            
+
             if (!File.Exists(userSettingsFolder + "\\" + RefConsts.cstrRSettingsFile))
             {
                 //no settings file yet; create it
@@ -289,7 +289,7 @@ namespace Remember
             //keep the width under 400 upon initial render
             if (dgvFolders.Columns["Path"].Width > 350)
             {
-                 dgvFolders.Columns["Path"].Width = 350;
+                dgvFolders.Columns["Path"].Width = 350;
             }
             //concatenate Description column so it doesn't spill off the edge
             dgvFolders.Columns["Description"].Width = 325;
@@ -438,8 +438,8 @@ namespace Remember
         /// </summary>
         public void LoadFolderDetail(string pstrItemFolder)
         {
-            //if a detail screen is already loaded, trash it and recover resources
-            if (ctlItemFolderDetail != null) { ctlItemFolderDetail.Dispose(); }
+            //get reference to currently loaded Detail control, if it exists
+            Control objDisposePane = (ctlItemFolderDetail == null? null : ctlItemFolderDetail);
 
             //generate the control and add to the form
             ctlItemFolderDetail = new ItemFolderDetail(pfrmHost: this,
@@ -453,6 +453,9 @@ namespace Remember
 
             //ensure detail pane is visible
             if (!blnDetailVisible) { ToggleDetailVisible(); }
+
+            //dispose of previously loaded pane, if it existed
+            if (objDisposePane != null) { objDisposePane.Dispose(); }
         }
 
         /// <summary>
