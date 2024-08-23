@@ -1,4 +1,6 @@
-﻿namespace Remember
+﻿using Remember.Objects;
+
+namespace Remember
 {
     /// <summary>
     /// This is the modal screen that opens when creating a new subfolder.

@@ -1,4 +1,4 @@
-﻿namespace Remember
+﻿namespace Remember.Objects
 {
     /// <summary>
     /// In-memory representation of user settings file
@@ -13,7 +13,7 @@
     /// <summary>
     /// Instance object of a single query string (name and query)
     /// </summary>
-    public class UserQuery 
+    public class UserQuery
     {
         public string queryName { get; set; }
         public string queryString { get; set; }

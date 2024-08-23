@@ -1,4 +1,4 @@
-﻿namespace Remember
+﻿namespace Remember.Objects
 {
     /// <summary>
     /// Instance object for folder metadata attributes.

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Remember
+namespace Remember.Objects
 {
     /// <summary>
     /// Instance representation of an item folder: path, metadata, child folders and child files
@@ -25,7 +25,7 @@ namespace Remember
                 //open file into a FolderMetadata object
                 string jsonString = File.ReadAllText(Path + "\\" + RefConsts.cstrRmdFile);
                 Metadata = JsonSerializer.Deserialize<ItemFolderMetadata>(jsonString);
-                
+
             }
             else
             {
@@ -36,7 +36,7 @@ namespace Remember
                 if (File.Exists(strParentPath + "/" + RefConsts.cstrRmdFile))
                 {
                     // parent folder has rmd; prepopulate key attributes from parent
-                    string jsonString =  File.ReadAllText(strParentPath + "/" + RefConsts.cstrRmdFile);
+                    string jsonString = File.ReadAllText(strParentPath + "/" + RefConsts.cstrRmdFile);
                     ItemFolderMetadata parentMD = JsonSerializer.Deserialize<ItemFolderMetadata>(jsonString);
                     if (parentMD != null)
                     {
@@ -64,7 +64,7 @@ namespace Remember
                 //save rmd file in folder
                 string jsnNewrmd = JsonSerializer.Serialize(Metadata);
                 File.WriteAllText(Path + "\\" + RefConsts.cstrRmdFile, jsnNewrmd);
-            
+
             }
 
             //get child folders
@@ -73,7 +73,7 @@ namespace Remember
 
             //get child files (ignore metadata file)
             string[] arrChildFiles = Directory.GetFiles(Path);
-            foreach (string strChildFile in arrChildFiles) { if (strChildFile != (Path + "\\" + RefConsts.cstrRmdFile)) { ChildFiles.Add(strChildFile); } }
+            foreach (string strChildFile in arrChildFiles) { if (strChildFile != Path + "\\" + RefConsts.cstrRmdFile) { ChildFiles.Add(strChildFile); } }
         }
         #endregion
     }

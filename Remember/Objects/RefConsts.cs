@@ -1,4 +1,4 @@
-﻿namespace Remember
+﻿namespace Remember.Objects
 {
     /// <summary>
     /// Static key values object
