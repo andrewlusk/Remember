@@ -445,7 +445,7 @@ namespace Remember
             ctlItemFolderDetail = new ItemFolderDetail(pfrmHost: this,
                 pobjItemFolder: dctItemFolders[pstrItemFolder]);
             ctlItemFolderDetail.Top = 8;
-            ctlItemFolderDetail.Left = dgvFolders.Right + 30;
+            ctlItemFolderDetail.Left = dgvFolders.Right + 10;
             this.Controls.Add(ctlItemFolderDetail);
 
             //find this row in the table and highlight it
