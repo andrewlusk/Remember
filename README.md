@@ -13,7 +13,7 @@
     </li>
     <li>Displays your enhanced folder tree as a table, allowing you to query (filter+sort) it by any combination of the
         above attributes.
-    </li><br />
+    </li>
     <li>Saves and recalls your queries so you can easily retrieve, for example:
         <ul style="margin:25px;">
             <li>all incomplete Tasks assigned to a particular person, ordered by Due date;</li>
