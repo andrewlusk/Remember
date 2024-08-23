@@ -1,12 +1,10 @@
 **What it does**:
 
-1. Imbues a designated folder in your filesystem, and all its subfolders, with the following attributes:
-- Type (Folder, Task, Event, Information);
-- Start, Due, and Completed dates;
-- Description;
-- Owner;
-- Importance and Urgency levels (ie Eisenhower matrix scores); and
-- Reminder notification date+time.
+<ol><li>Imbue a folder in your Windows filesystem, and all its subfolders, with:
+<ul style="margin:25px;"><li>Type (Folder, Task, Event, Information)</li><li>Start, Due, Completed dates</li><li>Description</li><li>Owner</li><li>Importance and Urgency levels (ie Eisenhower matrix scores)</li><li>Reminder notificaiton date+time</li>
+</ul>
+</li>
+</ol>
 
 2. Displays your enhanced folder tree as a table, allowing you to query (filter+sort) it by any combination of the above attributes.
 
