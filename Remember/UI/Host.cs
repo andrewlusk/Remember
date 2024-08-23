@@ -289,7 +289,7 @@ namespace Remember
             //keep the width under 400 upon initial render
             if (dgvFolders.Columns["Path"].Width > 350)
             {
-                dgvFolders.Columns["Path"].Width = 350;
+                 dgvFolders.Columns["Path"].Width = 350;
             }
             //concatenate Description column so it doesn't spill off the edge
             dgvFolders.Columns["Description"].Width = 325;
@@ -353,7 +353,7 @@ namespace Remember
         /// </summary>
         private void ApplyQuery()
         {
-            //make sure 
+            //clear any existing, visible query error
             txtQueryString.BackColor = Color.White;
             lblQueryErrorText.Visible = false;
 
@@ -385,9 +385,6 @@ namespace Remember
             //update list based on query
             dgvFolders.DataSource = tbvFilteredSorted.ToTable();
             tbvFilteredSorted.Dispose();
-
-            
-
         }
 
         /// <summary>
@@ -447,9 +444,9 @@ namespace Remember
             //generate the control and add to the form
             ctlItemFolderDetail = new ItemFolderDetail(pfrmHost: this,
                 pobjItemFolder: dctItemFolders[pstrItemFolder]);
-            this.Controls.Add(ctlItemFolderDetail);
             ctlItemFolderDetail.Top = 8;
             ctlItemFolderDetail.Left = dgvFolders.Right + 30;
+            this.Controls.Add(ctlItemFolderDetail);
 
             //find this row in the table and highlight it
             SelectFolderInTable(ctlItemFolderDetail.relativePath);
