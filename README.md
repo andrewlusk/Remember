@@ -17,7 +17,7 @@
     <li>Saves and recalls your queries so you can easily retrieve, for example:
         <ul style="margin:25px;">
             <li>all incomplete Tasks assigned to a particular person, ordered by Due date;</li>
-            <li>all complete tasks, ordered by completed date, to see a chronological log of what has been done;</li>
+            <li>all complete Tasks, ordered by Completed date, to see a chronological log of what has been done;</li>
             <li>a specific piece of Information with a particular word/phrase in its description; or</li>
             <li>any folders within a particular subfolder (or along a particular subfolder path).</li>
         </ul>
@@ -29,9 +29,9 @@
         </ul>
     </li>
     <li>Does all of the above 100% locally and 100% for free - no internet connection, account creation, or subscription
-        required. If you would like to run Remember on a different Windows machine and access the same data, you can connect
-        your root folder to the cloud storage provider of your choice using their native integrations (for example, both Google
-        Drive and OneDrive have desktop apps that allow live connections to cloud folders).
+        required. If you would like to run Remember on a different machine and access the same data, you can connect
+        your root folder to the cloud storage provider of your choice using their native integrations - for example, both Google
+        Drive and OneDrive have desktop apps with real-time synchronization to cloud folders.
     </li><br />
 </ol>
 

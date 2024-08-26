@@ -91,7 +91,6 @@ namespace Remember
                             qry.queryString = frmHost.strQueryString;
                         }
                         else { return; }
-
                     }
                 }
 
@@ -132,6 +131,7 @@ namespace Remember
                 }
                 frmHost.LoadQueryStringFromSettings(strQueryStringToLoad);
             }
+            frmHost.RefreshTree();
             this.Close();
         }
 
@@ -202,6 +202,7 @@ namespace Remember
                 //hide actions if nothing is selected
                 btnSaveLoad.Visible = (cmbQueryNames.SelectedIndex != -1);
                 btnDeleteQuery.Visible = (cmbQueryNames.SelectedIndex != -1);
+                frmHost.RefreshTree();
             }
         }
         #endregion
