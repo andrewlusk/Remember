@@ -253,7 +253,7 @@
             txtOwner.Margin = new Padding(3, 2, 3, 2);
             txtOwner.MaxLength = 100;
             txtOwner.Name = "txtOwner";
-            txtOwner.Size = new Size(477, 23);
+            txtOwner.Size = new Size(396, 23);
             txtOwner.TabIndex = 17;
             txtOwner.TextChanged += txtOwner_TextChanged;
             // 
@@ -273,7 +273,7 @@
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
             txtDescription.ScrollBars = ScrollBars.Vertical;
-            txtDescription.Size = new Size(574, 158);
+            txtDescription.Size = new Size(493, 158);
             txtDescription.TabIndex = 19;
             txtDescription.TextChanged += txtDescription_TextChanged;
             // 
@@ -302,7 +302,7 @@
             dgvFiles.Margin = new Padding(3, 2, 3, 2);
             dgvFiles.Name = "dgvFiles";
             dgvFiles.RowHeadersWidth = 51;
-            dgvFiles.Size = new Size(573, 153);
+            dgvFiles.Size = new Size(493, 153);
             dgvFiles.TabIndex = 21;
             dgvFiles.CellDoubleClick += dgvFiles_CellDoubleClick;
             // 
@@ -312,7 +312,7 @@
             txtName.Margin = new Padding(3, 2, 3, 2);
             txtName.MaxLength = 100;
             txtName.Name = "txtName";
-            txtName.Size = new Size(479, 23);
+            txtName.Size = new Size(396, 23);
             txtName.TabIndex = 23;
             txtName.TextChanged += txtName_TextChanged;
             // 
@@ -341,7 +341,7 @@
             btnSaveChanges.BackColor = Color.FromArgb(173, 205, 255);
             btnSaveChanges.FlatAppearance.BorderSize = 3;
             btnSaveChanges.Image = (Image)resources.GetObject("btnSaveChanges.Image");
-            btnSaveChanges.Location = new Point(551, 8);
+            btnSaveChanges.Location = new Point(471, 8);
             btnSaveChanges.Margin = new Padding(3, 2, 3, 2);
             btnSaveChanges.Name = "btnSaveChanges";
             btnSaveChanges.Size = new Size(33, 25);
@@ -626,7 +626,7 @@
             txtPath.MaxLength = 100;
             txtPath.Multiline = true;
             txtPath.Name = "txtPath";
-            txtPath.Size = new Size(479, 41);
+            txtPath.Size = new Size(396, 41);
             txtPath.TabIndex = 52;
             // 
             // btnUp
@@ -700,7 +700,7 @@
             Controls.Add(cmbFolderType);
             Controls.Add(lblFolderType);
             Name = "ItemFolderDetail";
-            Size = new Size(598, 748);
+            Size = new Size(512, 748);
             ((System.ComponentModel.ISupportInitialize)dgvFiles).EndInit();
             ResumeLayout(false);
             PerformLayout();

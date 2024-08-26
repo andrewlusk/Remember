@@ -50,17 +50,17 @@
             // dgvFolders
             // 
             dgvFolders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFolders.Location = new Point(32, 99);
+            dgvFolders.Location = new Point(10, 99);
             dgvFolders.Name = "dgvFolders";
             dgvFolders.RowHeadersWidth = 51;
-            dgvFolders.Size = new Size(973, 512);
+            dgvFolders.Size = new Size(971, 512);
             dgvFolders.TabIndex = 0;
             dgvFolders.RowHeaderMouseClick += dgvFolders_RowHeaderMouseClick;
             // 
             // btnRefresh
             // 
             btnRefresh.Image = (Image)resources.GetObject("btnRefresh.Image");
-            btnRefresh.Location = new Point(112, 67);
+            btnRefresh.Location = new Point(88, 67);
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(33, 25);
             btnRefresh.TabIndex = 4;
@@ -69,7 +69,7 @@
             // 
             // btnSelectFolder
             // 
-            btnSelectFolder.Location = new Point(716, 7);
+            btnSelectFolder.Location = new Point(692, 7);
             btnSelectFolder.Name = "btnSelectFolder";
             btnSelectFolder.Size = new Size(69, 25);
             btnSelectFolder.TabIndex = 2;
@@ -80,7 +80,7 @@
             // txtRootFolder
             // 
             txtRootFolder.Enabled = false;
-            txtRootFolder.Location = new Point(112, 9);
+            txtRootFolder.Location = new Point(88, 9);
             txtRootFolder.Name = "txtRootFolder";
             txtRootFolder.ReadOnly = true;
             txtRootFolder.Size = new Size(560, 23);
@@ -89,7 +89,7 @@
             // lblRootFolder
             // 
             lblRootFolder.AutoSize = true;
-            lblRootFolder.Location = new Point(31, 13);
+            lblRootFolder.Location = new Point(7, 13);
             lblRootFolder.Name = "lblRootFolder";
             lblRootFolder.Size = new Size(71, 15);
             lblRootFolder.TabIndex = 4;
@@ -98,7 +98,7 @@
             // btnOpenRootFolder
             // 
             btnOpenRootFolder.Image = (Image)resources.GetObject("btnOpenRootFolder.Image");
-            btnOpenRootFolder.Location = new Point(678, 7);
+            btnOpenRootFolder.Location = new Point(654, 7);
             btnOpenRootFolder.Margin = new Padding(3, 2, 3, 2);
             btnOpenRootFolder.Name = "btnOpenRootFolder";
             btnOpenRootFolder.Size = new Size(33, 25);
@@ -108,9 +108,9 @@
             // 
             // btnToggleDetail
             // 
-            btnToggleDetail.Location = new Point(963, 9);
+            btnToggleDetail.Location = new Point(939, 7);
             btnToggleDetail.Name = "btnToggleDetail";
-            btnToggleDetail.Size = new Size(42, 23);
+            btnToggleDetail.Size = new Size(42, 25);
             btnToggleDetail.TabIndex = 99;
             btnToggleDetail.Text = "Dtl";
             btnToggleDetail.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             // 
             // txtQueryString
             // 
-            txtQueryString.Location = new Point(112, 38);
+            txtQueryString.Location = new Point(88, 38);
             txtQueryString.Name = "txtQueryString";
             txtQueryString.Size = new Size(560, 23);
             txtQueryString.TabIndex = 3;
@@ -127,7 +127,7 @@
             // lblQueryString
             // 
             lblQueryString.AutoSize = true;
-            lblQueryString.Location = new Point(35, 41);
+            lblQueryString.Location = new Point(11, 41);
             lblQueryString.Name = "lblQueryString";
             lblQueryString.Size = new Size(42, 15);
             lblQueryString.TabIndex = 9;
@@ -137,7 +137,7 @@
             // 
             lblQueryErrorText.AutoSize = true;
             lblQueryErrorText.ForeColor = Color.Maroon;
-            lblQueryErrorText.Location = new Point(229, 72);
+            lblQueryErrorText.Location = new Point(205, 72);
             lblQueryErrorText.Name = "lblQueryErrorText";
             lblQueryErrorText.Size = new Size(85, 15);
             lblQueryErrorText.TabIndex = 100;
@@ -147,7 +147,7 @@
             // btnQueryClear
             // 
             btnQueryClear.Image = (Image)resources.GetObject("btnQueryClear.Image");
-            btnQueryClear.Location = new Point(678, 37);
+            btnQueryClear.Location = new Point(654, 37);
             btnQueryClear.Name = "btnQueryClear";
             btnQueryClear.Size = new Size(33, 25);
             btnQueryClear.TabIndex = 101;
@@ -157,7 +157,7 @@
             // btnSaveQuery
             // 
             btnSaveQuery.Image = (Image)resources.GetObject("btnSaveQuery.Image");
-            btnSaveQuery.Location = new Point(190, 67);
+            btnSaveQuery.Location = new Point(166, 67);
             btnSaveQuery.Name = "btnSaveQuery";
             btnSaveQuery.Size = new Size(33, 25);
             btnSaveQuery.TabIndex = 102;
@@ -167,7 +167,7 @@
             // btnLoadQuery
             // 
             btnLoadQuery.Image = (Image)resources.GetObject("btnLoadQuery.Image");
-            btnLoadQuery.Location = new Point(151, 67);
+            btnLoadQuery.Location = new Point(127, 67);
             btnLoadQuery.Name = "btnLoadQuery";
             btnLoadQuery.Size = new Size(33, 25);
             btnLoadQuery.TabIndex = 103;
@@ -196,7 +196,7 @@
             Name = "Host";
             Text = " Remember";
             Load += AppLoad;
-            Resize += Host_Resize;
+            Resize += Host_Resized;
             ((System.ComponentModel.ISupportInitialize)dgvFolders).EndInit();
             ResumeLayout(false);
             PerformLayout();

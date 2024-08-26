@@ -439,7 +439,7 @@ namespace Remember
         public void LoadFolderDetail(string pstrItemFolder)
         {
             //get reference to currently loaded Detail control, if it exists
-            Control objDisposePane = (ctlItemFolderDetail == null? null : ctlItemFolderDetail);
+            Control objDisposePane = (ctlItemFolderDetail == null ? null : ctlItemFolderDetail);
 
             //generate the control and add to the form
             ctlItemFolderDetail = new ItemFolderDetail(pfrmHost: this,
@@ -454,7 +454,7 @@ namespace Remember
             //ensure detail pane is visible
             if (!blnDetailVisible) { ToggleDetailVisible(); }
 
-            //dispose of previously loaded pane, if it existed
+            //trash previously loaded pane to recover resources
             if (objDisposePane != null) { objDisposePane.Dispose(); }
         }
 
@@ -476,7 +476,7 @@ namespace Remember
                 {
                     dgvFolders.Columns["Path"].Width = 350;
                 }
-                ctlItemFolderDetail.Size = new Size(598, 748);
+                ctlItemFolderDetail.Size = new Size(512, 748);
                 ctlItemFolderDetail.Visible = true;
                 this.btnToggleDetail.Text = ">";
 
@@ -492,15 +492,17 @@ namespace Remember
         {
             if (blnDetailVisible)
             {
-                dgvFolders.Size = new Size(this.Size.Width - 700, this.Size.Height - 150);
+                dgvFolders.Size = new Size(this.Size.Width - 560, this.Size.Height - 150);
                 ctlItemFolderDetail.Left = dgvFolders.Right + 10;
                 this.btnToggleDetail.Left = dgvFolders.Right - btnToggleDetail.Width;
             }
             else
             {
-                dgvFolders.Size = new Size(this.Size.Width - 100, this.Size.Height - 150);
+                dgvFolders.Size = new Size(this.Size.Width - 40, this.Size.Height - 150);
                 this.btnToggleDetail.Left = dgvFolders.Right - btnToggleDetail.Width;
             }
+            if (blnDetailVisible && Size.Width < 1350) { Width = 1350; }
+            if (!blnDetailVisible && Size.Width < 830) { Width = 830; }
         }
 
         /// <summary>
@@ -668,7 +670,7 @@ namespace Remember
         /// Resize handler for the main UI form.
         /// Triggers the auto-scaling for the item folders datagridview.
         /// </summary>
-        private void Host_Resize(object sender, EventArgs e)
+        private void Host_Resized(object sender, EventArgs e)
         {
             ScaleToSize();
         }
