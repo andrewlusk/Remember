@@ -178,7 +178,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1604, 622);
+            ClientSize = new Size(1604, 768);
             Controls.Add(btnLoadQuery);
             Controls.Add(btnSaveQuery);
             Controls.Add(btnQueryClear);
