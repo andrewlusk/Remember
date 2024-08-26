@@ -501,8 +501,8 @@ namespace Remember
                 dgvFolders.Size = new Size(this.Size.Width - 40, this.Size.Height - 150);
                 this.btnToggleDetail.Left = dgvFolders.Right - btnToggleDetail.Width;
             }
-            if (blnDetailVisible && Size.Width < 1350) { Width = 1350; }
-            if (!blnDetailVisible && Size.Width < 830) { Width = 830; }
+            if (blnDetailVisible && Size.Width < 1355) { Width = 1355; }
+            if (!blnDetailVisible && Size.Width < 835) { Width = 835; }
         }
 
         /// <summary>
