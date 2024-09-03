@@ -24,9 +24,9 @@ namespace Remember
         public ModalSaveLoadQuery frmSaveLoadQuery; // Container for the "Save/Load Query" modal where sorts/filters can be saved/recalled
         private bool blnModalLock = false; // Whether a modal is currently displayed and the main UI is locked
         public Panel pnlModaLock; // 'Locked' screen container object (darkened image of UI at the moment a modal opens)
-        public Reminders frmReminders;
-        public int intLeft;
-        public int intTop;
+        public Reminders frmReminders; // Container object for the "Reminders" modal
+        public int intLeft; // Host form position tracker, for recalling while form is minimized and .Left is -32000
+        public int intTop; // Host form position tracker, for recalling while form is minimized and .Top is -32000
 
         /// <summary>
         /// Modal lock flag getter/setter
@@ -278,9 +278,6 @@ namespace Remember
             foreach (string strColumn in astrDateColumns)
             { dgvFolders.Columns[strColumn].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"; }
 
-            //hide reminder column by default
-            dgvFolders.Columns["Reminder"].Visible = false;
-
             //allow Path column to wrap on resize
             dgvFolders.Columns["Path"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvFolders.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
@@ -437,7 +434,7 @@ namespace Remember
         /// </summary>
         public void LoadFolderDetail(string pstrItemFolder)
         {
-            if(ctlItemFolderDetail != null)
+            if (ctlItemFolderDetail != null)
             {
                 //detail pane is already loaded
                 if (ctlItemFolderDetail.dirty)
@@ -484,8 +481,8 @@ namespace Remember
         public void AddDetailPane(string pstrItemFolder)
         {
             //get reference to currently loaded detail pane, if it exists
-            ItemFolderDetail ctlCurrentlyLoadedDetail = (ctlItemFolderDetail != null? ctlItemFolderDetail : null);
-            
+            ItemFolderDetail ctlCurrentlyLoadedDetail = (ctlItemFolderDetail != null ? ctlItemFolderDetail : null);
+
             //generate the control and add to the form
             ctlItemFolderDetail = new ItemFolderDetail(pfrmHost: this,
                 pobjItemFolder: dctItemFolders[pstrItemFolder]);
@@ -546,7 +543,7 @@ namespace Remember
                 dgvFolders.Size = new Size(this.Size.Width - 40, this.Size.Height - 150);
                 this.btnToggleDetail.Left = dgvFolders.Right - btnToggleDetail.Width;
             }
-            if(WindowState != FormWindowState.Minimized)
+            if (WindowState != FormWindowState.Minimized)
             {
                 intLeft = Left;
                 intTop = Top;
@@ -706,10 +703,31 @@ namespace Remember
         }
         #endregion
 
-        private void objTimekeeper_Tick(object sender, EventArgs e)
+        /// <summary>
+        /// Tick handler for the reminder check timer
+        /// Check for new/changed reminders every 3s
+        /// </summary>
+        private void tmrReminders_Tick(object sender, EventArgs e)
         {
-            if(frmReminders == null || frmReminders.IsDisposed) { frmReminders = new Reminders(this); }
+            if (frmReminders == null || frmReminders.IsDisposed) { frmReminders = new Reminders(this); }
             frmReminders.CheckForReminders();
+        }
+
+        /// <summary>
+        /// Form close handler
+        /// Prevent closing app if there are unsaved changes in the detail pane
+        /// </summary>
+        private void Host_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                //do not allow this if there are unsaved changes in the detail pane
+                if (ctlItemFolderDetail != null && ctlItemFolderDetail.dirty)
+                {
+                    DialogResult result = MessageBox.Show("Discard unsaved changes?", "Exit", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.No) { e.Cancel = true; }
+                }
+            }
         }
     }
 }

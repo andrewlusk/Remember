@@ -54,6 +54,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Reminders";
             Text = "Reminders";
+            FormClosing += Reminders_FormClosing;
             ((System.ComponentModel.ISupportInitialize)dgvReminders).EndInit();
             ResumeLayout(false);
         }

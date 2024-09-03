@@ -178,7 +178,7 @@
             // tmrReminders
             // 
             tmrReminders.Interval = 5000;
-            tmrReminders.Tick += objTimekeeper_Tick;
+            tmrReminders.Tick += tmrReminders_Tick;
             // 
             // Host
             // 
@@ -201,6 +201,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Host";
             Text = " Remember";
+            FormClosing += Host_FormClosing;
             Load += AppLoad;
             Resize += Host_Resized;
             ((System.ComponentModel.ISupportInitialize)dgvFolders).EndInit();

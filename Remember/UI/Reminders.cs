@@ -1,22 +1,32 @@
 ﻿using Remember.Objects;
 using System.Data;
-using System.Text.Json;
 
 namespace Remember.UI
 {
     public partial class Reminders : Form
     {
+        #region "Properties"
         Host frmHost;
         private DataTable tblReminders = new DataTable();
         public List<string> remindItems = new List<string>();
+        #endregion
 
+        #region "Constructor"
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Reminders(Host pfrmHost)
         {
             InitializeComponent();
             frmHost = pfrmHost;
             InitializeTable();
         }
+        #endregion
 
+        #region "Functions"
+        /// <summary>
+        /// Set up the Reminders datagridview and the table feeding it
+        /// </summary>
         public void InitializeTable()
         {
             tblReminders.Columns.Add("Path", typeof(string));
@@ -30,12 +40,15 @@ namespace Remember.UI
             dgvReminders.CellClick += dgvReminders_CellClick;
         }
 
+        /// <summary>
+        /// Scan all visible items in the host table for elapsed Reminder dates
+        /// </summary>
         public void CheckForReminders()
         {
-            if(frmHost.ModalLock == false)
+            if (frmHost.ModalLock == false)
             {
+                //populate list of paths for items to remind
                 remindItems.Clear();
-                //scan all folders visible in the table for elapsed Reminder dates
                 DataView tbvItemsToRemind = new DataView((DataTable)frmHost.dgvFolders.DataSource);
                 string strCurrentTime = DateTime.Now.ToString(RefConsts.cstrDateTimeFormat.Substring(1));
                 tbvItemsToRemind.RowFilter = $"Reminder < '{strCurrentTime}'";
@@ -49,7 +62,7 @@ namespace Remember.UI
                     }
                 }
 
-                //DataView object no longer needed
+                //recover resources from unnecessary dataview
                 tbvItemsToRemind.Dispose();
 
                 if (remindItems.Count > 0)
@@ -74,6 +87,10 @@ namespace Remember.UI
             }
         }
 
+        /// <summary>
+        /// Refresh Reminders table.
+        /// Called after RefreshReminders() repopulates 'remindItems' list.
+        /// </summary>
         public void RefreshDisplayedReminders()
         {
             //cache current reminders
@@ -82,7 +99,8 @@ namespace Remember.UI
             {
                 lstExistingReminders.Add((string)dr["Path"]);
             }
-
+            
+            //repopulate table of reminders from list
             tblReminders.Rows.Clear();
             foreach (string strItem in remindItems)
             {
@@ -90,20 +108,18 @@ namespace Remember.UI
                 drRemindItem["Path"] = strItem;
                 tblReminders.Rows.Add(drRemindItem);
             }
+
+            //hook up datagridview to recreated table
             dgvReminders.DataSource = tblReminders;
             dgvReminders.AutoResizeColumns();
 
-            //determine whether to Activate the reminders form:
-            //must be reminding the user of something new
+            //do not activate reminders modal unless there are new reminders
             bool blnNewReminders = false;
 
             //compare current reminders to previous ones
             foreach (DataRow dr in tblReminders.Rows)
             {
-                if (lstExistingReminders.Contains((string)dr["Path"]) == false)
-                {
-                    blnNewReminders = true;
-                }
+                if (lstExistingReminders.Contains((string)dr["Path"]) == false) { blnNewReminders = true; }
             }
 
             if (blnNewReminders)
@@ -114,41 +130,88 @@ namespace Remember.UI
             }
         }
 
+        /// <summary>
+        /// Set parameter item's Reminder value to 5 minutes from current time
+        /// </summary>
+        private void Snooze(string pstrPath)
+        {
+            //get the item at this path (in memory)
+            ItemFolder itmFolder = frmHost.dctItemFolders[pstrPath];
+
+            //update the reminder time to 5 minutes from now
+            itmFolder.Metadata.Reminder = DateTime.Now.AddMinutes(5);
+
+            //commit change to file
+            itmFolder.SaveMetadataFile();
+        }
+        #endregion
+
+        #region "Event Handlers"
+        /// <summary>
+        /// Cell click handler in the reminders datagridview
+        /// </summary>
         private void dgvReminders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //did we click a snooze button?
-            if (e.ColumnIndex == 0 && e.RowIndex > (-1))
+            //do not handle column header clicks
+            if (e.RowIndex > (-1))
             {
-                //get item path
-                string strRelativePathSnoozed = (string)dgvReminders.Rows[e.RowIndex].Cells[1].Value;
-                string strPathSnoozed = frmHost.strParentPath + "\\" + strRelativePathSnoozed;
+                string strPathSelected = frmHost.strParentPath + "\\" + (string)dgvReminders.Rows[e.RowIndex].Cells[1].Value;
 
-                //get the item at this path (in memory)
-                ItemFolder itmFolder = frmHost.dctItemFolders[strPathSnoozed];
+                //Snooze button clicked
+                if (e.ColumnIndex == 0)
+                {
+                    Snooze(strPathSelected);
+                    frmHost.RefreshTree();
+                    frmHost.LoadFolderDetail(strPathSelected);
+                    CheckForReminders();
+                }
 
-                //update the reminder time to 5 minutes from now
-                itmFolder.Metadata.Reminder = DateTime.Now.AddMinutes(5);
-
-                //commit change to file
-                string jsnUpdatedMdFile = JsonSerializer.Serialize(itmFolder.Metadata);
-                File.WriteAllText(itmFolder.Path + "\\" + RefConsts.cstrRmdFile, jsnUpdatedMdFile);
-
-                //refresh the table and the detail pane
-                frmHost.RefreshTree();
-                frmHost.LoadFolderDetail(strPathSnoozed);
-
-                //refresh reminders
-                CheckForReminders();
-            }
-
-            //did we click a row header?
-            if(e.ColumnIndex < 0 && e.RowIndex > (-1))
-            {
-                //get item path
-                string strRelativePathSelected = (string)dgvReminders.Rows[e.RowIndex].Cells[1].Value;
-                string strPathSelected = frmHost.strParentPath + "\\" + strRelativePathSelected;
-                frmHost.LoadFolderDetail(strPathSelected);
+                //Row header clicked
+                if (e.ColumnIndex < 0)
+                {
+                    frmHost.LoadFolderDetail(strPathSelected);
+                }
             }
         }
+
+        /// <summary>
+        /// Reminders form close header.
+        /// Ensure no unsaved changes and then prompt user to confirm snooze all.
+        /// </summary>
+        private void Reminders_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                //do not allow this if there are unsaved changes in the detail pane
+                if (frmHost.ctlItemFolderDetail != null && frmHost.ctlItemFolderDetail.dirty)
+                {
+                    MessageBox.Show("Please save or discard your changes before snoozing all reminders.");
+                    e.Cancel = true;
+                    return;
+                }
+
+                DialogResult result = MessageBox.Show("Snooze all current reminders for 5 minutes?", "Snooze All", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    //Snooze all
+                    foreach (DataRow drReminder in tblReminders.Rows)
+                    {
+                        Snooze(frmHost.strParentPath + "\\" + (string)drReminder["Path"]);
+                    }
+                    frmHost.RefreshTree();
+
+                    //reload detail screen
+                    if (frmHost.ctlItemFolderDetail != null)
+                    {
+                        frmHost.LoadFolderDetail(frmHost.strParentPath + "\\" + frmHost.ctlItemFolderDetail.relativePath);
+                    }
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+        #endregion
     }
 }
