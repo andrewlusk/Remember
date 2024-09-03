@@ -162,7 +162,10 @@ namespace Remember.UI
                 {
                     Snooze(strPathSelected);
                     frmHost.RefreshTree();
-                    frmHost.LoadFolderDetail(strPathSelected);
+                    if(frmHost.blnDetailVisible && frmHost.ctlItemFolderDetail.relativePath == (string)dgvReminders.Rows[e.RowIndex].Cells[1].Value)
+                    {
+                        frmHost.LoadFolderDetail(strPathSelected);
+                    }
                     CheckForReminders();
                 }
 
@@ -183,7 +186,7 @@ namespace Remember.UI
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 //do not allow this if there are unsaved changes in the detail pane
-                if (frmHost.ctlItemFolderDetail != null && frmHost.ctlItemFolderDetail.dirty)
+                if (frmHost.blnDetailVisible && frmHost.ctlItemFolderDetail.dirty)
                 {
                     MessageBox.Show("Please save or discard your changes before snoozing all reminders.");
                     e.Cancel = true;
@@ -201,7 +204,7 @@ namespace Remember.UI
                     frmHost.RefreshTree();
 
                     //reload detail screen
-                    if (frmHost.ctlItemFolderDetail != null)
+                    if (frmHost.blnDetailVisible)
                     {
                         frmHost.LoadFolderDetail(frmHost.strParentPath + "\\" + frmHost.ctlItemFolderDetail.relativePath);
                     }
