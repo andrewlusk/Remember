@@ -44,6 +44,7 @@
             btnSaveQuery = new Button();
             btnLoadQuery = new Button();
             objToolTips = new ToolTip(components);
+            tmrReminders = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)dgvFolders).BeginInit();
             SuspendLayout();
             // 
@@ -174,6 +175,11 @@
             btnLoadQuery.UseVisualStyleBackColor = true;
             btnLoadQuery.Click += btnLoadQuery_Click;
             // 
+            // tmrReminders
+            // 
+            tmrReminders.Interval = 5000;
+            tmrReminders.Tick += tmrReminders_Tick;
+            // 
             // Host
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -195,6 +201,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Host";
             Text = " Remember";
+            FormClosing += Host_FormClosing;
             Load += AppLoad;
             Resize += Host_Resized;
             ((System.ComponentModel.ISupportInitialize)dgvFolders).EndInit();
@@ -218,5 +225,6 @@
         private Button btnSaveQuery;
         private Button btnLoadQuery;
         private ToolTip objToolTips;
+        private System.Windows.Forms.Timer tmrReminders;
     }
 }

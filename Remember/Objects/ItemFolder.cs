@@ -62,9 +62,7 @@ namespace Remember.Objects
                 Metadata.Reminder = RefConsts.cdtmHighDate;
 
                 //save rmd file in folder
-                string jsnNewrmd = JsonSerializer.Serialize(Metadata);
-                File.WriteAllText(Path + "\\" + RefConsts.cstrRmdFile, jsnNewrmd);
-
+                SaveMetadataFile();
             }
 
             //get child folders
@@ -74,6 +72,14 @@ namespace Remember.Objects
             //get child files (ignore metadata file)
             string[] arrChildFiles = Directory.GetFiles(Path);
             foreach (string strChildFile in arrChildFiles) { if (strChildFile != Path + "\\" + RefConsts.cstrRmdFile) { ChildFiles.Add(strChildFile); } }
+        }
+        #endregion
+
+        #region "Functions"
+        public void SaveMetadataFile()
+        {
+            string jsnMmdFile = JsonSerializer.Serialize(Metadata);
+            File.WriteAllText(Path + "\\" + RefConsts.cstrRmdFile, jsnMmdFile);
         }
         #endregion
     }
