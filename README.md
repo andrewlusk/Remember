@@ -11,7 +11,7 @@
             <li>Reminder notification date+time.</li>
         </ul>
     </li>
-    <li>Displays your enhanced folder tree as a table, allowing you to query (filter+sort) it by any combination of the
+    <li>Displays your enhanced folder tree as a table, allowing you to query (filter+sort) it by path and/or any combination of the
         above attributes.
     </li>
     <li>Saves and recalls your queries so you can easily retrieve, for example:
@@ -59,3 +59,4 @@ C:\\Users\\{UserName}\\AppData\\Local\\Remember\\rSettings.json.
 - Midnight clock icon by Freepik: https://www.flaticon.com/free-icon/night_2972569
 - Copy icon by Saepul Nahwan: https://www.flaticon.com/free-icon/copy_10628587
 - Paste icon by Smashicons: https://www.flaticon.com/free-icon/paste_1151209
+- Notes icon by Smashicons: https://www.flaticon.com/free-icon/notes_10741290

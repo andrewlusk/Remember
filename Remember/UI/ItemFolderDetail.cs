@@ -630,38 +630,7 @@ namespace Remember
         /// </summary>
         private void btnUp_Click(object sender, EventArgs e)
         {
-            if (dirty)
-            {
-                frmHost.ModalLock = true;
-                //prompt the user to cancel or save before navigating away
-                DialogResult result = MessageBox.Show(
-                    text: $"Changes to {relativePath} have not been saved." +
-                    "\n\nDo you want to save your changes before navigating away?",
-                    caption: "Save Changes?",
-                    buttons: MessageBoxButtons.YesNoCancel,
-                    icon: MessageBoxIcon.Warning);
-
-                if (result == DialogResult.Yes)
-                {
-                    saveChanges();
-                    frmHost.LoadFolderDetail(Directory.GetParent(objItemFolder.Path)!.FullName);
-                }
-                else if (result == DialogResult.No)
-                {
-                    //just navigate away
-                    frmHost.LoadFolderDetail(Directory.GetParent(objItemFolder.Path)!.FullName);
-                }
-                else
-                {
-                    //cancel: don't do anything
-                }
-                frmHost.ModalLock = false;
-            }
-            else
-            {
-                //detail has no unsaved changes; allow selection to change
-                frmHost.LoadFolderDetail(Directory.GetParent(objItemFolder.Path)!.FullName);
-            }
+            frmHost.LoadFolderDetail(Directory.GetParent(objItemFolder.Path)!.FullName);
         }
         #endregion
 

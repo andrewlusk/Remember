@@ -2,6 +2,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Text.Json;
 using Remember.Objects;
+using Remember.UI;
 
 namespace Remember
 {
@@ -23,6 +24,9 @@ namespace Remember
         public ModalSaveLoadQuery frmSaveLoadQuery; // Container for the "Save/Load Query" modal where sorts/filters can be saved/recalled
         private bool blnModalLock = false; // Whether a modal is currently displayed and the main UI is locked
         public Panel pnlModaLock; // 'Locked' screen container object (darkened image of UI at the moment a modal opens)
+        public Reminders frmReminders;
+        public int intLeft;
+        public int intTop;
 
         /// <summary>
         /// Modal lock flag getter/setter
@@ -33,7 +37,7 @@ namespace Remember
             set
             {
                 blnModalLock = value;
-                LockUI();
+                ToggleUILock();
             }
         }
         #endregion
@@ -45,31 +49,43 @@ namespace Remember
         public Host()
         {
             InitializeComponent();
-            userSettingsFolder = $"C:\\Users\\{Environment.UserName}\\AppData\\Local\\{RefConsts.cstrAppDataFolderName}";
-            InitializeTipText();
         }
         #endregion
 
         #region "Functions"
+
         /// <summary>
-        /// Set up all mouseover tip/alt text for image buttons on the control
+        /// Form.Load handler
+        /// Load user settings and set root folder
         /// </summary>
-        public void InitializeTipText()
+        private void AppLoad(object sender, EventArgs e)
         {
-            objToolTips.SetToolTip(btnOpenRootFolder, "Open Root Folder");
-            objToolTips.SetToolTip(btnRefresh, "Refresh Data");
-            objToolTips.SetToolTip(btnQueryClear, "Clear Query");
-            objToolTips.SetToolTip(btnLoadQuery, "Load Query");
-            objToolTips.SetToolTip(btnSaveQuery, "Save Query");
+            userSettingsFolder = $"C:\\Users\\{Environment.UserName}\\AppData\\Local\\{RefConsts.cstrAppDataFolderName}";
+            GetUserSettings();
+            if (userSettings.RootFolder == "")
+            {
+                //prompt user to indicate root item folder
+                SelectRootFolder();
+            }
+            else
+            {
+                SetRootFolder(userSettings.RootFolder);
+            }
+            InitializeTipText();
+            tmrReminders.Start();
+            frmReminders = new Reminders(this);
         }
 
         /// <summary>
         /// Lock controls and darken the screen while the user works with a modal
         /// </summary>
-        public void LockUI()
+        public void ToggleUILock()
         {
             if (ModalLock)
             {
+                //hide the Reminders modal, if it is visible
+                if (frmReminders != null && frmReminders.Visible) { frmReminders.Visible = false; }
+
                 // take a screenshot of the UI and darken it:
                 Bitmap bmp = new Bitmap(this.ClientRectangle.Width, this.ClientRectangle.Height);
                 using (Graphics G = Graphics.FromImage(bmp))
@@ -98,24 +114,7 @@ namespace Remember
             {
                 pnlModaLock.BackgroundImage.Dispose();
                 pnlModaLock.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Form.Load handler
-        /// Load user settings and set root folder
-        /// </summary>
-        private void AppLoad(object sender, EventArgs e)
-        {
-            GetUserSettings();
-            if (userSettings.RootFolder == "")
-            {
-                //prompt user to indicate root item folder
-                SelectRootFolder();
-            }
-            else
-            {
-                SetRootFolder(userSettings.RootFolder);
+                frmReminders.CheckForReminders();
             }
         }
 
@@ -141,7 +140,7 @@ namespace Remember
                 //settings file exists; open it
                 jsnSettings = File.ReadAllText(userSettingsFolder + "\\" + RefConsts.cstrRSettingsFile);
                 userSettings = JsonSerializer.Deserialize<UserSettings>(jsnSettings);
-                //put current query in the QueryString field
+                //put current query in the QueryString UI field
                 txtQueryString.Text = userSettings.currentQuery;
             }
         }
@@ -250,12 +249,12 @@ namespace Remember
 
             do
             {
-                ItemFolder pfLoadedFolder = new ItemFolder(pstrPath: lstFoldersToLoad[lstFoldersToLoad.Count - 1]);
+                ItemFolder fldLoadedFolder = new ItemFolder(pstrPath: lstFoldersToLoad[lstFoldersToLoad.Count - 1]);
                 lstFoldersToLoad.RemoveAt(lstFoldersToLoad.Count - 1);
-                dctItemFolders.Add(pfLoadedFolder.Path, pfLoadedFolder);
-                if (pfLoadedFolder.ChildFolders.Count > 0)
+                dctItemFolders.Add(fldLoadedFolder.Path, fldLoadedFolder);
+                if (fldLoadedFolder.ChildFolders.Count > 0)
                 {
-                    foreach (string strChildFolder in pfLoadedFolder.ChildFolders) { lstFoldersToLoad.Add(strChildFolder); }
+                    foreach (string strChildFolder in fldLoadedFolder.ChildFolders) { lstFoldersToLoad.Add(strChildFolder); }
                 }
             } while (lstFoldersToLoad.Count > 0);
 
@@ -263,8 +262,8 @@ namespace Remember
             tblItemFolders = CreateItemFolderTableStructure();
 
             //add a row to the table for each loaded item folder
-            foreach (KeyValuePair<string, ItemFolder> kvpPf in dctItemFolders)
-            { AddItemFolderDataRow(pkvpItemFolder: kvpPf); }
+            foreach (KeyValuePair<string, ItemFolder> kvpFld in dctItemFolders)
+            { AddItemFolderDataRow(pkvpItemFolder: kvpFld); }
 
             //bind the table to the displayed datagridview (UI table control)
             dgvFolders.DataSource = tblItemFolders;
@@ -438,9 +437,55 @@ namespace Remember
         /// </summary>
         public void LoadFolderDetail(string pstrItemFolder)
         {
-            //get reference to currently loaded Detail control, if it exists
-            Control objDisposePane = (ctlItemFolderDetail == null ? null : ctlItemFolderDetail);
+            if(ctlItemFolderDetail != null)
+            {
+                //detail pane is already loaded
+                if (ctlItemFolderDetail.dirty)
+                {
+                    //there are unsaved changes in the currently loaded detail
+                    ModalLock = true;
+                    string strRelativePath = pstrItemFolder.Substring(rootFolder.LastIndexOf('\\') + 1);
+                    //prompt the user to cancel or save before navigating away
+                    DialogResult result = MessageBox.Show(
+                        text: $"Changes to {ctlItemFolderDetail.relativePath} have not been saved." +
+                        "\n\nDo you want to save your changes before navigating away?",
+                        caption: "Save Changes?",
+                        buttons: MessageBoxButtons.YesNoCancel,
+                        icon: MessageBoxIcon.Warning);
 
+                    if (result == DialogResult.Yes)
+                    {
+                        ctlItemFolderDetail.saveChanges();
+                        AddDetailPane(pstrItemFolder);
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        //just navigate away
+                        AddDetailPane(pstrItemFolder);
+                    }
+                    else
+                    {
+                        //cancel: highlight the previously highlighted row
+                        SelectFolderInTable(ctlItemFolderDetail.relativePath);
+                    }
+                    ModalLock = false;
+                }
+                else
+                {
+                    AddDetailPane(pstrItemFolder);
+                }
+            }
+            else
+            {
+                AddDetailPane(pstrItemFolder);
+            }
+        }
+
+        public void AddDetailPane(string pstrItemFolder)
+        {
+            //get reference to currently loaded detail pane, if it exists
+            ItemFolderDetail ctlCurrentlyLoadedDetail = (ctlItemFolderDetail != null? ctlItemFolderDetail : null);
+            
             //generate the control and add to the form
             ctlItemFolderDetail = new ItemFolderDetail(pfrmHost: this,
                 pobjItemFolder: dctItemFolders[pstrItemFolder]);
@@ -454,8 +499,8 @@ namespace Remember
             //ensure detail pane is visible
             if (!blnDetailVisible) { ToggleDetailVisible(); }
 
-            //trash previously loaded pane to recover resources
-            if (objDisposePane != null) { objDisposePane.Dispose(); }
+            //dispose of previously loaded detail pane
+            if (ctlCurrentlyLoadedDetail != null) { ctlCurrentlyLoadedDetail.Dispose(); }
         }
 
         /// <summary>
@@ -501,6 +546,11 @@ namespace Remember
                 dgvFolders.Size = new Size(this.Size.Width - 40, this.Size.Height - 150);
                 this.btnToggleDetail.Left = dgvFolders.Right - btnToggleDetail.Width;
             }
+            if(WindowState != FormWindowState.Minimized)
+            {
+                intLeft = Left;
+                intTop = Top;
+            }
             if (blnDetailVisible && Size.Width < 1355) { Width = 1355; }
             if (!blnDetailVisible && Size.Width < 835) { Width = 835; }
         }
@@ -512,6 +562,18 @@ namespace Remember
         {
             txtQueryString.Text = pstrQueryString;
             RefreshTree();
+        }
+
+        /// <summary>
+        /// Set up all mouseover tip/alt text for image buttons on the control
+        /// </summary>
+        public void InitializeTipText()
+        {
+            objToolTips.SetToolTip(btnOpenRootFolder, "Open Root Folder");
+            objToolTips.SetToolTip(btnRefresh, "Refresh Data");
+            objToolTips.SetToolTip(btnQueryClear, "Clear Query");
+            objToolTips.SetToolTip(btnLoadQuery, "Load Query");
+            objToolTips.SetToolTip(btnSaveQuery, "Save Query");
         }
         #endregion
 
@@ -553,40 +615,7 @@ namespace Remember
             if (dgv.SelectedRows.Count == 1)
             {
                 string strClickedFolderRelativePath = (string)dgvFolders.SelectedRows[0].Cells[1].Value;
-                if (ctlItemFolderDetail.dirty)
-                {
-                    ModalLock = true;
-                    //prompt the user to cancel or save before navigating away
-                    DialogResult result = MessageBox.Show(
-                        text: $"Changes to {ctlItemFolderDetail.relativePath} have not been saved." +
-                        "\n\nDo you want to save your changes before navigating away?",
-                        caption: "Save Changes?",
-                        buttons: MessageBoxButtons.YesNoCancel,
-                        icon: MessageBoxIcon.Warning);
-
-                    if (result == DialogResult.Yes)
-                    {
-                        ctlItemFolderDetail.saveChanges();
-                        LoadFolderDetail(strParentPath + "\\" + strClickedFolderRelativePath);
-                    }
-                    else if (result == DialogResult.No)
-                    {
-                        //just navigate away
-                        LoadFolderDetail(strParentPath + "\\" + strClickedFolderRelativePath);
-                    }
-                    else
-                    {
-                        //cancel: highlight the previously highlighted row
-                        SelectFolderInTable(ctlItemFolderDetail.relativePath);
-                    }
-                    ModalLock = false;
-                }
-                else
-                {
-                    //detail has no unsaved changes; allow selection to change
-                    dgvFolders.Rows[e.RowIndex].Selected = true;
-                    LoadFolderDetail(strParentPath + "\\" + strClickedFolderRelativePath);
-                }
+                LoadFolderDetail(strParentPath + "\\" + strClickedFolderRelativePath);
             }
 
             //more than 1 row selected
@@ -596,7 +625,8 @@ namespace Remember
             }
             else
             {
-                //
+                //invalid path
+                throw new Exception(RefConsts.cstrUnhandledErrorText + "\n\n You somehow selected ZERO rows in the folders table?!");
             }
         }
 
@@ -675,5 +705,11 @@ namespace Remember
             ScaleToSize();
         }
         #endregion
+
+        private void objTimekeeper_Tick(object sender, EventArgs e)
+        {
+            if(frmReminders == null || frmReminders.IsDisposed) { frmReminders = new Reminders(this); }
+            frmReminders.CheckForReminders();
+        }
     }
 }
