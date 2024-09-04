@@ -27,6 +27,7 @@ namespace Remember
         public Reminders frmReminders; // Container object for the "Reminders" modal
         public int intLeft; // Host form position tracker, for recalling while form is minimized and .Left is -32000
         public int intTop; // Host form position tracker, for recalling while form is minimized and .Top is -32000
+        public List<string> lstRootFolderHistory; //Remember previous root folder paths so they can be recalled
 
         /// <summary>
         /// Modal lock flag getter/setter
@@ -62,6 +63,7 @@ namespace Remember
         {
             userSettingsFolder = $"C:\\Users\\{Environment.UserName}\\AppData\\Local\\{RefConsts.cstrAppDataFolderName}";
             GetUserSettings();
+            lstRootFolderHistory = new List<string>();
             if (userSettings.RootFolder == "")
             {
                 //prompt user to indicate root item folder
@@ -69,7 +71,7 @@ namespace Remember
             }
             else
             {
-                SetRootFolder(userSettings.RootFolder);
+                SetRootFolder(pstrNewRootFolder: userSettings.RootFolder, pblnNewRootHistory: true);
             }
             InitializeTipText();
             tmrReminders.Start();
@@ -154,7 +156,7 @@ namespace Remember
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             DialogResult result = fbd.ShowDialog();
-            if (result == DialogResult.OK) { SetRootFolder(fbd.SelectedPath); }
+            if (result == DialogResult.OK) { SetRootFolder(pstrNewRootFolder: fbd.SelectedPath, pblnNewRootHistory: true); }
         }
 
         /// <summary>
@@ -162,7 +164,7 @@ namespace Remember
         /// validate parameter folder, update settings,
         /// trigger full datagridview refresh, then load the root folder in the Detail pane.
         /// </summary>
-        public void SetRootFolder(string pstrNewRootFolder)
+        public void SetRootFolder(string pstrNewRootFolder, bool pblnNewRootHistory)
         {
 
             //validate root folder path
@@ -229,6 +231,14 @@ namespace Remember
             strParentPath = "";
             strParentPath = Directory.GetParent(rootFolder)!.FullName;
 
+            //update root folder history and Back button visibility
+            if (pblnNewRootHistory) 
+            { 
+                lstRootFolderHistory.Add(rootFolder);
+                if (lstRootFolderHistory.Count > 20) { lstRootFolderHistory.RemoveAt(0); } // only retain last 20 changes
+            }
+            btnRootFolderBack.Visible = (lstRootFolderHistory.Count > 1);
+
             RefreshTree();
             LoadFolderDetail(rootFolder);
         }
@@ -241,7 +251,6 @@ namespace Remember
         /// </summary>
         public void RefreshTree()
         {
-
             //create a list to queue folders for loading and add the root folder to the queue
             List<string> lstFoldersToLoad = new List<string>();
             lstFoldersToLoad.Add(rootFolder);
@@ -569,6 +578,7 @@ namespace Remember
         public void InitializeTipText()
         {
             objToolTips.SetToolTip(btnOpenRootFolder, "Open Root Folder");
+            objToolTips.SetToolTip(btnRootFolderBack, "Back to Previous Root Folder");
             objToolTips.SetToolTip(btnRefresh, "Refresh Data");
             objToolTips.SetToolTip(btnQueryClear, "Clear Query");
             objToolTips.SetToolTip(btnLoadQuery, "Load Query");
@@ -703,7 +713,6 @@ namespace Remember
         {
             ScaleToSize();
         }
-        #endregion
 
         /// <summary>
         /// Tick handler for the reminder check timer
@@ -731,5 +740,16 @@ namespace Remember
                 }
             }
         }
+        
+        /// <summary>
+        /// Click handler for 'Back' button on Root Folder
+        /// Switches your root folder back to what it was
+        /// </summary>
+        private void btnRootFolderBack_Click(object sender, EventArgs e)
+        {
+            lstRootFolderHistory.Remove(lstRootFolderHistory.Last());
+            SetRootFolder(pstrNewRootFolder: lstRootFolderHistory.Last(), pblnNewRootHistory: false);
+        }
+        #endregion
     }
 }

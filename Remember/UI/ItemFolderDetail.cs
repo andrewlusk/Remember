@@ -234,7 +234,7 @@ namespace Remember
                 Directory.Move(objItemFolder.Path, strNewPath); //rename folder
                 objItemFolder.Path = strNewPath;
                 folderName = txtName.Text;
-                if (strOldPath == frmHost.rootFolder) { frmHost.SetRootFolder(strNewPath); }
+                if (strOldPath == frmHost.rootFolder) { frmHost.SetRootFolder(pstrNewRootFolder: strNewPath, pblnNewRootHistory: true); }
             }
 
             //clear Dirty
@@ -549,7 +549,7 @@ namespace Remember
             //delete
             if (result == DialogResult.OK)
             {
-                frmHost.SetRootFolder(objItemFolder.Path);
+                frmHost.SetRootFolder(pstrNewRootFolder: objItemFolder.Path, pblnNewRootHistory: true);
             }
             frmHost.ModalLock = false;
         }

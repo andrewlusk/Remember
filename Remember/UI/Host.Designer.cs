@@ -45,6 +45,7 @@
             btnLoadQuery = new Button();
             objToolTips = new ToolTip(components);
             tmrReminders = new System.Windows.Forms.Timer(components);
+            btnRootFolderBack = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvFolders).BeginInit();
             SuspendLayout();
             // 
@@ -180,11 +181,23 @@
             tmrReminders.Interval = 5000;
             tmrReminders.Tick += tmrReminders_Tick;
             // 
+            // btnRootFolderBack
+            // 
+            btnRootFolderBack.Location = new Point(765, 7);
+            btnRootFolderBack.Name = "btnRootFolderBack";
+            btnRootFolderBack.Size = new Size(42, 25);
+            btnRootFolderBack.TabIndex = 104;
+            btnRootFolderBack.Text = "<";
+            btnRootFolderBack.UseVisualStyleBackColor = true;
+            btnRootFolderBack.Visible = false;
+            btnRootFolderBack.Click += btnRootFolderBack_Click;
+            // 
             // Host
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1604, 768);
+            Controls.Add(btnRootFolderBack);
             Controls.Add(btnLoadQuery);
             Controls.Add(btnSaveQuery);
             Controls.Add(btnQueryClear);
@@ -226,5 +239,6 @@
         private Button btnLoadQuery;
         private ToolTip objToolTips;
         private System.Windows.Forms.Timer tmrReminders;
+        private Button btnRootFolderBack;
     }
 }
