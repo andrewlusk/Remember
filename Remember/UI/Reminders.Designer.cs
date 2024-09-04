@@ -39,17 +39,17 @@
             dgvReminders.AllowUserToDeleteRows = false;
             dgvReminders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvReminders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvReminders.Location = new Point(16, 11);
+            dgvReminders.Location = new Point(26, 11);
             dgvReminders.Name = "dgvReminders";
             dgvReminders.ReadOnly = true;
-            dgvReminders.Size = new Size(456, 180);
+            dgvReminders.Size = new Size(394, 180);
             dgvReminders.TabIndex = 0;
             // 
             // Reminders
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(484, 203);
+            ClientSize = new Size(448, 203);
             Controls.Add(dgvReminders);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Reminders";
