@@ -31,14 +31,9 @@ namespace Remember.UI
         {
             tblReminders.Columns.Add("Path", typeof(string));
             dgvReminders.DataSource = tblReminders;
-            DataGridViewButtonColumn colButton = new DataGridViewButtonColumn();
-            colButton.HeaderText = "Snooze";
-            colButton.Text = "Snooze";
-            colButton.Name = "Snooze";
-            colButton.UseColumnTextForButtonValue = true;
-            dgvReminders.Columns.Add(colButton);
+            dgvReminders.Columns.Add(new DataGridViewButtonColumn()
+            { HeaderText = "Snooze", Text = "Snooze", Name = "Snooze", UseColumnTextForButtonValue = true });
             dgvReminders.CellClick += dgvReminders_CellClick;
-
             dgvReminders.Columns["Path"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvReminders.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
@@ -50,29 +45,32 @@ namespace Remember.UI
         {
             if (frmHost.ModalLock == false)
             {
-                //populate list of paths for items to remind
+                //repopulate internal list of items where reminder date has elapsed
                 remindItems.Clear();
                 DataView tbvItemsToRemind = new DataView((DataTable)frmHost.dgvFolders.DataSource);
                 string strCurrentTime = DateTime.Now.ToString(RefConsts.cstrDateTimeFormat.Substring(1));
+                //use DataView's filter functionality to find elapsed reminder dates
                 tbvItemsToRemind.RowFilter = $"Reminder < '{strCurrentTime}'";
                 if (tbvItemsToRemind.Count > 0)
                 {
                     for (int i = 0; i < tbvItemsToRemind.Count; i++)
                     {
                         string strItemPath = (string)tbvItemsToRemind[i]["Path"];
-                        //ensure the item is flagged in the reminders modal
+                        //ensure the item is present in the list
                         if (remindItems.Contains(strItemPath) == false) { remindItems.Add(strItemPath); }
                     }
                 }
 
-                //recover resources from unnecessary dataview
+                //finished with DataView object
                 tbvItemsToRemind.Dispose();
 
                 if (remindItems.Count > 0)
                 {
+                    //there are items to display
                     RefreshDisplayedReminders();
                     if (!Visible)
                     {
+                        //display reminder modal
                         StartPosition = FormStartPosition.Manual;
                         Left = frmHost.intLeft + 300;
                         Top = frmHost.intTop + 300;
@@ -81,6 +79,7 @@ namespace Remember.UI
                 }
                 else if (remindItems.Count == 0 && dgvReminders.RowCount > 0)
                 {
+                    //there are stale/cleared reminders
                     RefreshDisplayedReminders();
                 }
                 else
@@ -96,14 +95,14 @@ namespace Remember.UI
         /// </summary>
         public void RefreshDisplayedReminders()
         {
-            //cache current reminders
+            //cache currently displayed reminders
             List<string> lstExistingReminders = new List<string>();
             foreach (DataRow dr in tblReminders.Rows)
             {
                 lstExistingReminders.Add((string)dr["Path"]);
             }
             
-            //repopulate table of reminders from list
+            //repopulate table of reminders from list of items with elapsed reminder dates
             tblReminders.Rows.Clear();
             foreach (string strItem in remindItems)
             {
@@ -112,12 +111,11 @@ namespace Remember.UI
                 tblReminders.Rows.Add(drRemindItem);
             }
 
-            //hook up datagridview to recreated table
+            //display table in datagridview
             dgvReminders.DataSource = tblReminders;
             dgvReminders.AutoResizeColumns();
-            //todo: set a size limit and then wrap the text
 
-            //do not activate reminders modal unless there are new reminders
+            //determine if there are new reminders being displayed
             bool blnNewReminders = false;
 
             //compare current reminders to previous ones
@@ -128,6 +126,7 @@ namespace Remember.UI
 
             if (blnNewReminders)
             {
+                //make the Reminders modal pop up if a new reminder is present
                 WindowState = FormWindowState.Normal;
                 TopMost = true;
                 Activate();
@@ -139,7 +138,7 @@ namespace Remember.UI
         /// </summary>
         private void Snooze(string pstrPath)
         {
-            //get the item at this path (in memory)
+            //get the item at this path
             ItemFolder itmFolder = frmHost.dctItemFolders[pstrPath];
 
             //update the reminder time to 5 minutes from now
@@ -156,7 +155,7 @@ namespace Remember.UI
         /// </summary>
         private void dgvReminders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //do not handle column header clicks
+            //ignore if clicking on a column header
             if (e.RowIndex > (-1))
             {
                 string strPathSelected = frmHost.strParentPath + "\\" + (string)dgvReminders.Rows[e.RowIndex].Cells[1].Value;
