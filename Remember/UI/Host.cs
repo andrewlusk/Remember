@@ -130,6 +130,8 @@ namespace Remember
                 //no settings file yet; create it
                 userSettings = new UserSettings();
                 userSettings.userQueries = [];
+                //provide some preset sample queries out of the box
+                userSettings.InitializePresetQueries();
                 userSettings.RootFolder = "";
                 jsnSettings = JsonSerializer.Serialize(userSettings);
                 if (!Directory.Exists(userSettingsFolder)) { Directory.CreateDirectory(userSettingsFolder); }
