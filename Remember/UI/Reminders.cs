@@ -38,6 +38,9 @@ namespace Remember.UI
             colButton.UseColumnTextForButtonValue = true;
             dgvReminders.Columns.Add(colButton);
             dgvReminders.CellClick += dgvReminders_CellClick;
+
+            dgvReminders.Columns["Path"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgvReminders.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
 
         /// <summary>
@@ -112,6 +115,7 @@ namespace Remember.UI
             //hook up datagridview to recreated table
             dgvReminders.DataSource = tblReminders;
             dgvReminders.AutoResizeColumns();
+            //todo: set a size limit and then wrap the text
 
             //do not activate reminders modal unless there are new reminders
             bool blnNewReminders = false;
@@ -193,7 +197,7 @@ namespace Remember.UI
                     return;
                 }
 
-                DialogResult result = MessageBox.Show("Snooze all current reminders for 5 minutes?", "Snooze All", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("Snooze all displayed reminders for 5 minutes?", "Snooze All", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
                     //Snooze all

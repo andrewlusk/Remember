@@ -9,25 +9,33 @@
         public UserQuery[] userQueries { get; set; } //all saved queries
         public string currentQuery { get; set; } //the query currently loaded
 
+        /// <summary>
+        /// Provide some sample queries out of the box (called when initially creating settings file)
+        /// </summary>
         public void InitializePresetQueries()
         {
-            Dictionary<string, string> dctPresetQueries = new Dictionary<string, string>();
-            dctPresetQueries.Add("All Tasks", "Type = 'Task'");
-            dctPresetQueries.Add("Incomplete Tasks by Due", "Type = 'Task' AND Completed is null ORDER BY Due desc");
-            dctPresetQueries.Add("Completed Items Log", "Completed is not null ORDER BY Completed desc");
-            dctPresetQueries.Add("Path Contains Text", "Path like '%your text here%'");
-            dctPresetQueries.Add("Description Contains Text", "Description like '%your text here%'");
+            Dictionary<string, string> dctPresetQueries = new Dictionary<string, string>
+            {
+                { "Path alphabetical", "Order by Path"},
+                { "Todo Tasks", "Type = 'Task' and Completed is null order by Due asc" },
+                { "Todo Tasks w/ Due Date", "Type = 'Task' and Completed is null and Due is not null order by Due asc" },
+                { "Current", "Completed is null order by Path asc" },
+                { "Completed Items Log", "Completed is not null order by Completed desc" },
+                { "Info Only", "Type = 'Info' order by Path asc" },
+                { "Path search", "Path like '%your text here%'" }
+            };
 
             userQueries = new UserQuery[dctPresetQueries.Count];
             UserQuery uqWorking;
-            int counter = 0;
+            int intCountQueries = 0;
+
             foreach (KeyValuePair<string, string> kvpPresetQuery in dctPresetQueries)
             {
                 uqWorking = new UserQuery();
                 uqWorking.queryName = kvpPresetQuery.Key;
                 uqWorking.queryString = kvpPresetQuery.Value;
-                userQueries[counter] = uqWorking;
-                counter++;
+                userQueries[intCountQueries] = uqWorking;
+                intCountQueries++;
             }
         }
     }
