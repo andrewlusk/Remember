@@ -167,7 +167,7 @@ namespace Remember
 
             Button[] arrDateMidnightButtons = [btnStartMidnight, btnDueMidnight, btnReminderMidnight, btnCompletedMidnight];
             foreach (Button btnButton in arrDateMidnightButtons) { objToolTips.SetToolTip(btnButton, "Set to Midnight (for Today's Date)"); }
-            
+
             Button[] arrDateCopyButtons = [btnStartCopy, btnDueCopy, btnReminderCopy, btnCompletedCopy];
             foreach (Button btnButton in arrDateCopyButtons) { objToolTips.SetToolTip(btnButton, "Copy Date"); }
 
@@ -562,7 +562,7 @@ namespace Remember
         {
             frmHost.ModalLock = true;
             frmNewSubfolder = new ModalNewSubfolder(frmHost);
-            frmNewSubfolder.FormBorderStyle = FormBorderStyle.FixedDialog; // Optional: Set a fixed dialog border style
+            frmNewSubfolder.FormBorderStyle = FormBorderStyle.FixedDialog;
             frmNewSubfolder.Text = "Create New Subfolder";
             frmNewSubfolder.StartPosition = FormStartPosition.CenterScreen;
             frmNewSubfolder.ShowDialog();
@@ -633,7 +633,5 @@ namespace Remember
             frmHost.LoadFolderDetail(Directory.GetParent(objItemFolder.Path)!.FullName);
         }
         #endregion
-
-
     }
 }

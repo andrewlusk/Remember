@@ -9,6 +9,8 @@
         public UserQuery[] userQueries { get; set; } //all saved queries
         public string currentQuery { get; set; } //the query currently loaded
 
+        public LastSize LastSize { get; set; } //last known window size
+
         /// <summary>
         /// Provide some sample queries out of the box (called when initially creating settings file)
         /// </summary>
@@ -47,5 +49,13 @@
     {
         public string queryName { get; set; }
         public string queryString { get; set; }
+    }
+
+    public class LastSize
+    {
+        public int LastLeft { get; set; }
+        public int LastTop { get; set; }
+        public int LastHeight { get; set; }
+        public int LastWidth { get; set; }
     }
 }

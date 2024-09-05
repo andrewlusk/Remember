@@ -91,7 +91,7 @@
             // lblFolderType
             // 
             lblFolderType.AutoSize = true;
-            lblFolderType.Location = new Point(6, 118);
+            lblFolderType.Location = new Point(6, 169);
             lblFolderType.Name = "lblFolderType";
             lblFolderType.Size = new Size(31, 15);
             lblFolderType.TabIndex = 0;
@@ -101,7 +101,7 @@
             // 
             cmbFolderType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbFolderType.FormattingEnabled = true;
-            cmbFolderType.Location = new Point(108, 116);
+            cmbFolderType.Location = new Point(108, 167);
             cmbFolderType.Margin = new Padding(3, 2, 3, 2);
             cmbFolderType.Name = "cmbFolderType";
             cmbFolderType.Size = new Size(133, 23);
@@ -111,7 +111,7 @@
             // lblCompleted
             // 
             lblCompleted.AutoSize = true;
-            lblCompleted.Location = new Point(6, 270);
+            lblCompleted.Location = new Point(6, 321);
             lblCompleted.Name = "lblCompleted";
             lblCompleted.Size = new Size(66, 15);
             lblCompleted.TabIndex = 2;
@@ -122,10 +122,10 @@
             dtpCompleted.CalendarTitleForeColor = Color.AliceBlue;
             dtpCompleted.CustomFormat = " yyyy-MMM-dd HH:mm:ss";
             dtpCompleted.Format = DateTimePickerFormat.Custom;
-            dtpCompleted.Location = new Point(108, 266);
+            dtpCompleted.Location = new Point(108, 317);
             dtpCompleted.Margin = new Padding(3, 2, 3, 2);
             dtpCompleted.Name = "dtpCompleted";
-            dtpCompleted.Size = new Size(219, 23);
+            dtpCompleted.Size = new Size(166, 23);
             dtpCompleted.TabIndex = 3;
             dtpCompleted.ValueChanged += dtpCompleted_ValueChanged;
             // 
@@ -134,16 +134,16 @@
             dtpCreated.CustomFormat = " yyyy-MMM-dd HH:mm:ss";
             dtpCreated.Enabled = false;
             dtpCreated.Format = DateTimePickerFormat.Custom;
-            dtpCreated.Location = new Point(108, 141);
+            dtpCreated.Location = new Point(108, 192);
             dtpCreated.Margin = new Padding(3, 2, 3, 2);
             dtpCreated.Name = "dtpCreated";
-            dtpCreated.Size = new Size(219, 23);
+            dtpCreated.Size = new Size(166, 23);
             dtpCreated.TabIndex = 5;
             // 
             // lblCreated
             // 
             lblCreated.AutoSize = true;
-            lblCreated.Location = new Point(6, 143);
+            lblCreated.Location = new Point(6, 194);
             lblCreated.Name = "lblCreated";
             lblCreated.Size = new Size(48, 15);
             lblCreated.TabIndex = 4;
@@ -153,17 +153,17 @@
             // 
             dtpDue.CustomFormat = " yyyy-MMM-dd HH:mm:ss";
             dtpDue.Format = DateTimePickerFormat.Custom;
-            dtpDue.Location = new Point(108, 216);
+            dtpDue.Location = new Point(108, 267);
             dtpDue.Margin = new Padding(3, 2, 3, 2);
             dtpDue.Name = "dtpDue";
-            dtpDue.Size = new Size(219, 23);
+            dtpDue.Size = new Size(166, 23);
             dtpDue.TabIndex = 7;
             dtpDue.ValueChanged += dtpDue_ValueChanged;
             // 
             // lblDue
             // 
             lblDue.AutoSize = true;
-            lblDue.Location = new Point(7, 220);
+            lblDue.Location = new Point(7, 271);
             lblDue.Name = "lblDue";
             lblDue.Size = new Size(28, 15);
             lblDue.TabIndex = 6;
@@ -174,16 +174,16 @@
             dtpModified.CustomFormat = " yyyy-MMM-dd HH:mm:ss";
             dtpModified.Enabled = false;
             dtpModified.Format = DateTimePickerFormat.Custom;
-            dtpModified.Location = new Point(108, 166);
+            dtpModified.Location = new Point(108, 217);
             dtpModified.Margin = new Padding(3, 2, 3, 2);
             dtpModified.Name = "dtpModified";
-            dtpModified.Size = new Size(219, 23);
+            dtpModified.Size = new Size(166, 23);
             dtpModified.TabIndex = 9;
             // 
             // lblModified
             // 
             lblModified.AutoSize = true;
-            lblModified.Location = new Point(6, 170);
+            lblModified.Location = new Point(6, 221);
             lblModified.Name = "lblModified";
             lblModified.Size = new Size(55, 15);
             lblModified.TabIndex = 8;
@@ -193,17 +193,17 @@
             // 
             dtpReminder.CustomFormat = " yyyy-MMM-dd HH:mm:ss";
             dtpReminder.Format = DateTimePickerFormat.Custom;
-            dtpReminder.Location = new Point(108, 241);
+            dtpReminder.Location = new Point(108, 292);
             dtpReminder.Margin = new Padding(3, 2, 3, 2);
             dtpReminder.Name = "dtpReminder";
-            dtpReminder.Size = new Size(219, 23);
+            dtpReminder.Size = new Size(166, 23);
             dtpReminder.TabIndex = 11;
             dtpReminder.ValueChanged += dtpReminder_ValueChanged;
             // 
             // lblReminder
             // 
             lblReminder.AutoSize = true;
-            lblReminder.Location = new Point(6, 245);
+            lblReminder.Location = new Point(6, 296);
             lblReminder.Name = "lblReminder";
             lblReminder.Size = new Size(58, 15);
             lblReminder.TabIndex = 10;
@@ -212,7 +212,7 @@
             // lblImportance
             // 
             lblImportance.AutoSize = true;
-            lblImportance.Location = new Point(7, 294);
+            lblImportance.Location = new Point(7, 345);
             lblImportance.Name = "lblImportance";
             lblImportance.Size = new Size(68, 15);
             lblImportance.TabIndex = 12;
@@ -220,7 +220,7 @@
             // 
             // txtImportance
             // 
-            txtImportance.Location = new Point(108, 292);
+            txtImportance.Location = new Point(108, 343);
             txtImportance.Margin = new Padding(3, 2, 3, 2);
             txtImportance.MaxLength = 5;
             txtImportance.Name = "txtImportance";
@@ -230,7 +230,7 @@
             // 
             // txtUrgency
             // 
-            txtUrgency.Location = new Point(108, 316);
+            txtUrgency.Location = new Point(108, 367);
             txtUrgency.Margin = new Padding(3, 2, 3, 2);
             txtUrgency.MaxLength = 5;
             txtUrgency.Name = "txtUrgency";
@@ -241,7 +241,7 @@
             // lblUrgency
             // 
             lblUrgency.AutoSize = true;
-            lblUrgency.Location = new Point(7, 319);
+            lblUrgency.Location = new Point(7, 370);
             lblUrgency.Name = "lblUrgency";
             lblUrgency.Size = new Size(51, 15);
             lblUrgency.TabIndex = 14;
@@ -249,18 +249,18 @@
             // 
             // txtOwner
             // 
-            txtOwner.Location = new Point(108, 341);
+            txtOwner.Location = new Point(108, 392);
             txtOwner.Margin = new Padding(3, 2, 3, 2);
             txtOwner.MaxLength = 100;
             txtOwner.Name = "txtOwner";
-            txtOwner.Size = new Size(396, 23);
+            txtOwner.Size = new Size(348, 23);
             txtOwner.TabIndex = 17;
             txtOwner.TextChanged += txtOwner_TextChanged;
             // 
             // lblOwner
             // 
             lblOwner.AutoSize = true;
-            lblOwner.Location = new Point(7, 344);
+            lblOwner.Location = new Point(7, 395);
             lblOwner.Name = "lblOwner";
             lblOwner.Size = new Size(42, 15);
             lblOwner.TabIndex = 16;
@@ -268,19 +268,19 @@
             // 
             // txtDescription
             // 
-            txtDescription.Location = new Point(11, 391);
+            txtDescription.Location = new Point(11, 442);
             txtDescription.Margin = new Padding(3, 2, 3, 2);
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
             txtDescription.ScrollBars = ScrollBars.Vertical;
-            txtDescription.Size = new Size(493, 158);
+            txtDescription.Size = new Size(445, 139);
             txtDescription.TabIndex = 19;
             txtDescription.TextChanged += txtDescription_TextChanged;
             // 
             // lblDescription
             // 
             lblDescription.AutoSize = true;
-            lblDescription.Location = new Point(7, 372);
+            lblDescription.Location = new Point(7, 423);
             lblDescription.Name = "lblDescription";
             lblDescription.Size = new Size(67, 15);
             lblDescription.TabIndex = 18;
@@ -289,7 +289,7 @@
             // lblFiles
             // 
             lblFiles.AutoSize = true;
-            lblFiles.Location = new Point(8, 554);
+            lblFiles.Location = new Point(8, 591);
             lblFiles.Name = "lblFiles";
             lblFiles.Size = new Size(83, 15);
             lblFiles.TabIndex = 20;
@@ -298,28 +298,30 @@
             // dgvFiles
             // 
             dgvFiles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFiles.Location = new Point(11, 571);
+            dgvFiles.Location = new Point(11, 610);
             dgvFiles.Margin = new Padding(3, 2, 3, 2);
             dgvFiles.Name = "dgvFiles";
             dgvFiles.RowHeadersWidth = 51;
-            dgvFiles.Size = new Size(493, 153);
+            dgvFiles.Size = new Size(445, 136);
             dgvFiles.TabIndex = 21;
             dgvFiles.CellDoubleClick += dgvFiles_CellDoubleClick;
             // 
             // txtName
             // 
-            txtName.Location = new Point(108, 91);
+            txtName.Location = new Point(108, 109);
             txtName.Margin = new Padding(3, 2, 3, 2);
             txtName.MaxLength = 100;
+            txtName.Multiline = true;
             txtName.Name = "txtName";
-            txtName.Size = new Size(396, 23);
+            txtName.ScrollBars = ScrollBars.Vertical;
+            txtName.Size = new Size(347, 54);
             txtName.TabIndex = 23;
             txtName.TextChanged += txtName_TextChanged;
             // 
             // lblName
             // 
             lblName.AutoSize = true;
-            lblName.Location = new Point(7, 94);
+            lblName.Location = new Point(7, 110);
             lblName.Name = "lblName";
             lblName.Size = new Size(39, 15);
             lblName.TabIndex = 22;
@@ -341,7 +343,7 @@
             btnSaveChanges.BackColor = Color.FromArgb(173, 205, 255);
             btnSaveChanges.FlatAppearance.BorderSize = 3;
             btnSaveChanges.Image = (Image)resources.GetObject("btnSaveChanges.Image");
-            btnSaveChanges.Location = new Point(471, 8);
+            btnSaveChanges.Location = new Point(423, 8);
             btnSaveChanges.Margin = new Padding(3, 2, 3, 2);
             btnSaveChanges.Name = "btnSaveChanges";
             btnSaveChanges.Size = new Size(33, 25);
@@ -377,7 +379,7 @@
             // btnDueClear
             // 
             btnDueClear.Image = (Image)resources.GetObject("btnDueClear.Image");
-            btnDueClear.Location = new Point(330, 217);
+            btnDueClear.Location = new Point(281, 268);
             btnDueClear.Name = "btnDueClear";
             btnDueClear.Size = new Size(33, 23);
             btnDueClear.TabIndex = 28;
@@ -387,7 +389,7 @@
             // btnDueNow
             // 
             btnDueNow.Image = (Image)resources.GetObject("btnDueNow.Image");
-            btnDueNow.Location = new Point(366, 217);
+            btnDueNow.Location = new Point(317, 268);
             btnDueNow.Name = "btnDueNow";
             btnDueNow.Size = new Size(33, 23);
             btnDueNow.TabIndex = 29;
@@ -397,7 +399,7 @@
             // btnDueMidnight
             // 
             btnDueMidnight.Image = (Image)resources.GetObject("btnDueMidnight.Image");
-            btnDueMidnight.Location = new Point(401, 217);
+            btnDueMidnight.Location = new Point(352, 268);
             btnDueMidnight.Name = "btnDueMidnight";
             btnDueMidnight.Size = new Size(33, 23);
             btnDueMidnight.TabIndex = 30;
@@ -407,7 +409,7 @@
             // btnDueCopy
             // 
             btnDueCopy.Image = (Image)resources.GetObject("btnDueCopy.Image");
-            btnDueCopy.Location = new Point(436, 217);
+            btnDueCopy.Location = new Point(387, 268);
             btnDueCopy.Name = "btnDueCopy";
             btnDueCopy.Size = new Size(33, 23);
             btnDueCopy.TabIndex = 31;
@@ -418,7 +420,7 @@
             // 
             btnDuePaste.Enabled = false;
             btnDuePaste.Image = (Image)resources.GetObject("btnDuePaste.Image");
-            btnDuePaste.Location = new Point(471, 217);
+            btnDuePaste.Location = new Point(422, 268);
             btnDuePaste.Name = "btnDuePaste";
             btnDuePaste.Size = new Size(33, 23);
             btnDuePaste.TabIndex = 32;
@@ -428,7 +430,7 @@
             // btnReminderClear
             // 
             btnReminderClear.Image = (Image)resources.GetObject("btnReminderClear.Image");
-            btnReminderClear.Location = new Point(330, 241);
+            btnReminderClear.Location = new Point(281, 292);
             btnReminderClear.Name = "btnReminderClear";
             btnReminderClear.Size = new Size(33, 23);
             btnReminderClear.TabIndex = 33;
@@ -439,7 +441,7 @@
             // 
             btnReminderPaste.Enabled = false;
             btnReminderPaste.Image = (Image)resources.GetObject("btnReminderPaste.Image");
-            btnReminderPaste.Location = new Point(471, 241);
+            btnReminderPaste.Location = new Point(422, 292);
             btnReminderPaste.Name = "btnReminderPaste";
             btnReminderPaste.Size = new Size(33, 23);
             btnReminderPaste.TabIndex = 37;
@@ -449,7 +451,7 @@
             // btnReminderCopy
             // 
             btnReminderCopy.Image = (Image)resources.GetObject("btnReminderCopy.Image");
-            btnReminderCopy.Location = new Point(436, 241);
+            btnReminderCopy.Location = new Point(387, 292);
             btnReminderCopy.Name = "btnReminderCopy";
             btnReminderCopy.Size = new Size(33, 23);
             btnReminderCopy.TabIndex = 36;
@@ -459,7 +461,7 @@
             // btnReminderMidnight
             // 
             btnReminderMidnight.Image = (Image)resources.GetObject("btnReminderMidnight.Image");
-            btnReminderMidnight.Location = new Point(401, 241);
+            btnReminderMidnight.Location = new Point(352, 292);
             btnReminderMidnight.Name = "btnReminderMidnight";
             btnReminderMidnight.Size = new Size(33, 23);
             btnReminderMidnight.TabIndex = 35;
@@ -469,7 +471,7 @@
             // btnReminderNow
             // 
             btnReminderNow.Image = (Image)resources.GetObject("btnReminderNow.Image");
-            btnReminderNow.Location = new Point(366, 241);
+            btnReminderNow.Location = new Point(317, 292);
             btnReminderNow.Name = "btnReminderNow";
             btnReminderNow.Size = new Size(33, 23);
             btnReminderNow.TabIndex = 34;
@@ -480,7 +482,7 @@
             // 
             btnCompletedPaste.Enabled = false;
             btnCompletedPaste.Image = (Image)resources.GetObject("btnCompletedPaste.Image");
-            btnCompletedPaste.Location = new Point(471, 266);
+            btnCompletedPaste.Location = new Point(422, 317);
             btnCompletedPaste.Name = "btnCompletedPaste";
             btnCompletedPaste.Size = new Size(33, 23);
             btnCompletedPaste.TabIndex = 42;
@@ -490,7 +492,7 @@
             // btnCompletedCopy
             // 
             btnCompletedCopy.Image = (Image)resources.GetObject("btnCompletedCopy.Image");
-            btnCompletedCopy.Location = new Point(436, 266);
+            btnCompletedCopy.Location = new Point(387, 317);
             btnCompletedCopy.Name = "btnCompletedCopy";
             btnCompletedCopy.Size = new Size(33, 23);
             btnCompletedCopy.TabIndex = 41;
@@ -500,7 +502,7 @@
             // btnCompletedMidnight
             // 
             btnCompletedMidnight.Image = (Image)resources.GetObject("btnCompletedMidnight.Image");
-            btnCompletedMidnight.Location = new Point(401, 266);
+            btnCompletedMidnight.Location = new Point(352, 317);
             btnCompletedMidnight.Name = "btnCompletedMidnight";
             btnCompletedMidnight.Size = new Size(33, 23);
             btnCompletedMidnight.TabIndex = 40;
@@ -510,7 +512,7 @@
             // btnCompletedNow
             // 
             btnCompletedNow.Image = (Image)resources.GetObject("btnCompletedNow.Image");
-            btnCompletedNow.Location = new Point(366, 266);
+            btnCompletedNow.Location = new Point(317, 317);
             btnCompletedNow.Name = "btnCompletedNow";
             btnCompletedNow.Size = new Size(33, 23);
             btnCompletedNow.TabIndex = 39;
@@ -520,7 +522,7 @@
             // btnCompletedClear
             // 
             btnCompletedClear.Image = (Image)resources.GetObject("btnCompletedClear.Image");
-            btnCompletedClear.Location = new Point(330, 266);
+            btnCompletedClear.Location = new Point(281, 317);
             btnCompletedClear.Name = "btnCompletedClear";
             btnCompletedClear.Size = new Size(33, 23);
             btnCompletedClear.TabIndex = 38;
@@ -530,7 +532,7 @@
             // lblStart
             // 
             lblStart.AutoSize = true;
-            lblStart.Location = new Point(7, 194);
+            lblStart.Location = new Point(7, 245);
             lblStart.Name = "lblStart";
             lblStart.Size = new Size(31, 15);
             lblStart.TabIndex = 43;
@@ -540,10 +542,10 @@
             // 
             dtpStart.CustomFormat = " yyyy-MMM-dd HH:mm:ss";
             dtpStart.Format = DateTimePickerFormat.Custom;
-            dtpStart.Location = new Point(108, 191);
+            dtpStart.Location = new Point(108, 242);
             dtpStart.Margin = new Padding(3, 2, 3, 2);
             dtpStart.Name = "dtpStart";
-            dtpStart.Size = new Size(219, 23);
+            dtpStart.Size = new Size(166, 23);
             dtpStart.TabIndex = 44;
             dtpStart.ValueChanged += dtpStart_ValueChanged;
             // 
@@ -551,7 +553,7 @@
             // 
             btnStartPaste.Enabled = false;
             btnStartPaste.Image = (Image)resources.GetObject("btnStartPaste.Image");
-            btnStartPaste.Location = new Point(471, 191);
+            btnStartPaste.Location = new Point(422, 242);
             btnStartPaste.Name = "btnStartPaste";
             btnStartPaste.Size = new Size(33, 23);
             btnStartPaste.TabIndex = 49;
@@ -561,7 +563,7 @@
             // btnStartCopy
             // 
             btnStartCopy.Image = (Image)resources.GetObject("btnStartCopy.Image");
-            btnStartCopy.Location = new Point(436, 191);
+            btnStartCopy.Location = new Point(387, 242);
             btnStartCopy.Name = "btnStartCopy";
             btnStartCopy.Size = new Size(33, 23);
             btnStartCopy.TabIndex = 48;
@@ -571,7 +573,7 @@
             // btnStartMidnight
             // 
             btnStartMidnight.Image = (Image)resources.GetObject("btnStartMidnight.Image");
-            btnStartMidnight.Location = new Point(401, 191);
+            btnStartMidnight.Location = new Point(352, 242);
             btnStartMidnight.Name = "btnStartMidnight";
             btnStartMidnight.Size = new Size(33, 23);
             btnStartMidnight.TabIndex = 47;
@@ -581,7 +583,7 @@
             // btnStartNow
             // 
             btnStartNow.Image = (Image)resources.GetObject("btnStartNow.Image");
-            btnStartNow.Location = new Point(365, 191);
+            btnStartNow.Location = new Point(316, 242);
             btnStartNow.Name = "btnStartNow";
             btnStartNow.Size = new Size(33, 23);
             btnStartNow.TabIndex = 46;
@@ -591,7 +593,7 @@
             // btnStartClear
             // 
             btnStartClear.Image = (Image)resources.GetObject("btnStartClear.Image");
-            btnStartClear.Location = new Point(330, 191);
+            btnStartClear.Location = new Point(281, 242);
             btnStartClear.Name = "btnStartClear";
             btnStartClear.Size = new Size(33, 23);
             btnStartClear.TabIndex = 45;
@@ -612,7 +614,7 @@
             // lblPath
             // 
             lblPath.AutoSize = true;
-            lblPath.Location = new Point(8, 49);
+            lblPath.Location = new Point(8, 47);
             lblPath.Name = "lblPath";
             lblPath.Size = new Size(31, 15);
             lblPath.TabIndex = 51;
@@ -620,13 +622,14 @@
             // 
             // txtPath
             // 
-            txtPath.Enabled = false;
             txtPath.Location = new Point(108, 46);
             txtPath.Margin = new Padding(3, 2, 3, 2);
             txtPath.MaxLength = 100;
             txtPath.Multiline = true;
             txtPath.Name = "txtPath";
-            txtPath.Size = new Size(396, 41);
+            txtPath.ReadOnly = true;
+            txtPath.ScrollBars = ScrollBars.Vertical;
+            txtPath.Size = new Size(347, 59);
             txtPath.TabIndex = 52;
             // 
             // btnUp
@@ -700,7 +703,7 @@
             Controls.Add(cmbFolderType);
             Controls.Add(lblFolderType);
             Name = "ItemFolderDetail";
-            Size = new Size(512, 748);
+            Size = new Size(467, 774);
             ((System.ComponentModel.ISupportInitialize)dgvFiles).EndInit();
             ResumeLayout(false);
             PerformLayout();

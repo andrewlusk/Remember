@@ -64,18 +64,15 @@ namespace Remember
             userSettingsFolder = $"C:\\Users\\{Environment.UserName}\\AppData\\Local\\{RefConsts.cstrAppDataFolderName}";
             GetUserSettings();
             lstRootFolderHistory = new List<string>();
-            if (userSettings.RootFolder == "")
-            {
-                //prompt user to indicate root item folder
-                SelectRootFolder();
-            }
-            else
-            {
-                SetRootFolder(pstrNewRootFolder: userSettings.RootFolder, pblnNewRootHistory: true);
-            }
+            
+            //get root folder from settings or prompt user to select
+            if (userSettings.RootFolder == "") { SelectRootFolder(); }
+            else { SetRootFolder(pstrNewRootFolder: userSettings.RootFolder, pblnNewRootHistory: true); }
+
             InitializeTipText();
-            tmrReminders.Start();
             frmReminders = new Reminders(this);
+            tmrReminders.Start();
+            InitializeHostSize();
         }
 
         /// <summary>
@@ -130,11 +127,17 @@ namespace Remember
             if (!File.Exists(userSettingsFolder + "\\" + RefConsts.cstrRSettingsFile))
             {
                 //no settings file yet; create it
-                userSettings = new UserSettings();
-                userSettings.userQueries = [];
+                userSettings = new UserSettings
+                {
+                    userQueries = [],
+                    RootFolder = "",
+                    LastSize = new LastSize { LastTop = Top, LastLeft = Left, LastHeight = Height, LastWidth = Width }
+                };
+
                 //provide some preset sample queries out of the box
                 userSettings.InitializePresetQueries();
-                userSettings.RootFolder = "";
+
+                //save settings to file
                 jsnSettings = JsonSerializer.Serialize(userSettings);
                 if (!Directory.Exists(userSettingsFolder)) { Directory.CreateDirectory(userSettingsFolder); }
                 File.WriteAllText(userSettingsFolder + "\\" + RefConsts.cstrRSettingsFile, jsnSettings);
@@ -529,23 +532,23 @@ namespace Remember
                 {
                     dgvFolders.Columns["Path"].Width = 350;
                 }
-                ctlItemFolderDetail.Size = new Size(512, 748);
+                ctlItemFolderDetail.Size = new Size(467, 774);
                 ctlItemFolderDetail.Visible = true;
                 this.btnToggleDetail.Text = ">";
 
             }
             blnDetailVisible = !blnDetailVisible;
-            ScaleToSize();
+            ScaleFoldersTable();
         }
 
         /// <summary>
         /// Resize the width of the item folders table, based on whether the Detail pane is visible
         /// </summary>
-        private void ScaleToSize()
+        private void ScaleFoldersTable()
         {
             if (blnDetailVisible)
             {
-                dgvFolders.Size = new Size(this.Size.Width - 560, this.Size.Height - 150);
+                dgvFolders.Size = new Size(this.Size.Width - 520, this.Size.Height - 150);
                 ctlItemFolderDetail.Left = dgvFolders.Right + 10;
                 this.btnToggleDetail.Left = dgvFolders.Right - btnToggleDetail.Width;
             }
@@ -559,8 +562,22 @@ namespace Remember
                 intLeft = Left;
                 intTop = Top;
             }
-            if (blnDetailVisible && Size.Width < 1355) { Width = 1355; }
-            if (!blnDetailVisible && Size.Width < 835) { Width = 835; }
+            if (blnDetailVisible && Size.Width < 1360) { Width = 1360; }
+            if (!blnDetailVisible && Size.Width < 880) { Width = 880; }
+        }
+
+        public void InitializeHostSize()
+        {
+            //load last known size from userSettings
+            Top = userSettings.LastSize.LastTop;
+            Left = userSettings.LastSize.LastLeft;
+            Height = userSettings.LastSize.LastHeight;
+            Width = userSettings.LastSize.LastWidth;
+
+            //adjust to current screen
+            Rectangle rctMainScreen = Screen.PrimaryScreen.WorkingArea;
+            if ((Left + Width) > rctMainScreen.Width) { Width = (rctMainScreen.Width - Left); }
+            if ((Top + Height) > rctMainScreen.Height) { Height = (rctMainScreen.Height - Top); }
         }
 
         /// <summary>
@@ -579,6 +596,7 @@ namespace Remember
         {
             objToolTips.SetToolTip(btnOpenRootFolder, "Open Root Folder");
             objToolTips.SetToolTip(btnRootFolderBack, "Back to Previous Root Folder");
+            objToolTips.SetToolTip(btnToggleDetail, "Expand/Collapse Detail View");
             objToolTips.SetToolTip(btnRefresh, "Refresh Data");
             objToolTips.SetToolTip(btnQueryClear, "Clear Query");
             objToolTips.SetToolTip(btnLoadQuery, "Load Query");
@@ -681,7 +699,7 @@ namespace Remember
             strQueryString = txtQueryString.Text;
             ModalLock = true;
             frmSaveLoadQuery = new ModalSaveLoadQuery(pfrmHost: this, pblnSave: true, pblnLoad: false);
-            frmSaveLoadQuery.FormBorderStyle = FormBorderStyle.FixedDialog; // Optional: Set a fixed dialog border style
+            frmSaveLoadQuery.FormBorderStyle = FormBorderStyle.FixedDialog;
             frmSaveLoadQuery.Text = "Save Query";
             frmSaveLoadQuery.StartPosition = FormStartPosition.CenterScreen;
             frmSaveLoadQuery.ShowDialog();
@@ -711,7 +729,7 @@ namespace Remember
         /// </summary>
         private void Host_Resized(object sender, EventArgs e)
         {
-            ScaleToSize();
+            ScaleFoldersTable();
         }
 
         /// <summary>
@@ -726,7 +744,8 @@ namespace Remember
 
         /// <summary>
         /// Form close handler
-        /// Prevent closing app if there are unsaved changes in the detail pane
+        /// Prevent closing app if there are unsaved changes in the detail pane,
+        /// save last known window size to the settings file.
         /// </summary>
         private void Host_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -739,6 +758,14 @@ namespace Remember
                     if (result == DialogResult.No) { e.Cancel = true; }
                 }
             }
+
+            //save last known window size/position
+            userSettings.LastSize.LastTop = Top;
+            userSettings.LastSize.LastLeft = Left;
+            userSettings.LastSize.LastWidth = Width;
+            userSettings.LastSize.LastHeight = Height;
+            if (!Directory.Exists(userSettingsFolder)) { Directory.CreateDirectory(userSettingsFolder); }
+            File.WriteAllText(userSettingsFolder + "\\" + RefConsts.cstrRSettingsFile, JsonSerializer.Serialize(userSettings));
         }
         
         /// <summary>
