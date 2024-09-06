@@ -81,7 +81,6 @@
             // 
             // txtRootFolder
             // 
-            txtRootFolder.Enabled = false;
             txtRootFolder.Location = new Point(88, 9);
             txtRootFolder.Name = "txtRootFolder";
             txtRootFolder.ReadOnly = true;

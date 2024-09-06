@@ -1,4 +1,18 @@
-**What it does**:
+<h1>Intro</h1>
+put a screenshot here when I've got a good image of test data<br/>
+<br/>
+This is the todo app that I've needed for my entire career as a consultant.  It's not revolutionary, it just meets my particular requirements, which are:<br/><br/>
+<ol>
+<li>I want to organize units of work and information hierarchically (like in a folder/subfolder tree), so they can be grouped together and live within specific contexts.  I also want to be able to copy or relocate these branches of units to other places within the tree, like moving folders around.</li>
+<li>I want the option to give each unit a Due date, a priority score, a Completion date, long text Description for my own notes and status updates, and to attach files and links to each one (eg emails, documentation, links to Jira tickets).</li>
+<li>I want to be able to query (filter and sort) the entire hierarchy by any of the abovementioned attributes using SQL-like language, and easily save/recall those queries.</li>
+<li>I want to be able to assign a reminder date+time to any unit, and have the app notify me when the time arrives.</li>
+<li>I need the solution to be 100% local to my machine.  I work on government systems, which means that SaaS tools are off the table because all the communications, files, data, and deliverables pertaining to my work potentially contain protected information.  I can't upload any of that to random cloud servers because it's government property.</li>
+<li>The solution can't require purchasing an external license/key (it needs to be free).</li>
+</ol>
+
+<br/>
+<h1>What it does</h1><br/>
 
 <ol>
     <li>Imbues a folder in your Windows filesystem, and all its subfolders, with the following attributes:
@@ -37,19 +51,8 @@
     </li><br />
 </ol>
 
-**How it works**:
 
-- When you select a root folder, an \_rmd.json file is created in that folder and all its descendant folders; this is
-where the additional attributes get stored.
-- Clicking on the row header for any folder in the table will open the Detail pane for that folder, where you can view
-and edit the folder's attributes.
-- With every folder creation/update, root folder change, or manual refresh, Remember crawls the folder tree and updates
-the table with all the up-to-date attributes.
-- Your last selected root folder and all your saved queries live in
-C:\\Users\\{UserName}\\AppData\\Local\\Remember\\rSettings.json.
-
-
-**Icons attribution**:
+**Attribution of Icons Used**:
 - Pyramid icon by Freepik: https://www.flaticon.com/free-icon/pyramid_1903915
 - Refresh icon by Maxim Baskinski: https://www.flaticon.com/free-icon/arrow_9497023
 - (red X) Delete icon by Pixelmeetup: https://www.flaticon.com/free-icon/clear_1632708
