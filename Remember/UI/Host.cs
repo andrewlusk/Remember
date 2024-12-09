@@ -64,7 +64,7 @@ namespace Remember
             userSettingsFolder = $"C:\\Users\\{Environment.UserName}\\AppData\\Local\\{RefConsts.cstrAppDataFolderName}";
             GetUserSettings();
             lstRootFolderHistory = new List<string>();
-            
+
             //get root folder from settings or prompt user to select
             if (userSettings.RootFolder == "") { SelectRootFolder(); }
             else { SetRootFolder(pstrNewRootFolder: userSettings.RootFolder, pblnNewRootHistory: true); }
@@ -235,8 +235,8 @@ namespace Remember
             strParentPath = Directory.GetParent(rootFolder)!.FullName;
 
             //update root folder history and Back button visibility
-            if (pblnNewRootHistory) 
-            { 
+            if (pblnNewRootHistory)
+            {
                 lstRootFolderHistory.Add(rootFolder);
                 if (lstRootFolderHistory.Count > 20) { lstRootFolderHistory.RemoveAt(0); } // only retain last 20 changes
             }
@@ -760,14 +760,14 @@ namespace Remember
             }
 
             //save last known window size/position
-            userSettings.LastSize.LastTop = Top;
-            userSettings.LastSize.LastLeft = Left;
-            userSettings.LastSize.LastWidth = Width;
-            userSettings.LastSize.LastHeight = Height;
+            userSettings.LastSize.LastTop = Top > 0 ? Top : 0;
+            userSettings.LastSize.LastLeft = Left > 0 ? Left : 0;
+            userSettings.LastSize.LastWidth = Width > 1360 ? Width : 1360;
+            userSettings.LastSize.LastHeight = Height > 39 ? Height : 622; ;
             if (!Directory.Exists(userSettingsFolder)) { Directory.CreateDirectory(userSettingsFolder); }
             File.WriteAllText(userSettingsFolder + "\\" + RefConsts.cstrRSettingsFile, JsonSerializer.Serialize(userSettings));
         }
-        
+
         /// <summary>
         /// Click handler for 'Back' button on Root Folder
         /// Switches your root folder back to what it was
@@ -778,5 +778,32 @@ namespace Remember
             SetRootFolder(pstrNewRootFolder: lstRootFolderHistory.Last(), pblnNewRootHistory: false);
         }
         #endregion
+
+        private void txtPathFilter_TextChanged(object sender, EventArgs e)
+        {
+            if (txtPathFilter.Text != "")
+            {
+                txtQueryString.Enabled = false;
+                txtQueryString.Text = "Path LIKE '%" + txtPathFilter.Text + "%'";
+            }
+            else
+            {
+                if (!txtQueryString.Enabled) { txtQueryString.Enabled = true; }
+                txtQueryString.Text = "";
+            }
+            if (tmrFilterRefresh.Enabled == false) { tmrFilterRefresh.Start(); }
+        }
+
+        private void btnPathFilterClear_Click(object sender, EventArgs e)
+        {
+            txtPathFilter.Text = "";
+            RefreshTree();
+        }
+
+        private void tmrFilterRefresh_Tick(object sender, EventArgs e)
+        {
+            RefreshTree();
+            tmrFilterRefresh.Stop();
+        }
     }
 }

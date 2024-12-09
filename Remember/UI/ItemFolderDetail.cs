@@ -633,5 +633,10 @@ namespace Remember
             frmHost.LoadFolderDetail(Directory.GetParent(objItemFolder.Path)!.FullName);
         }
         #endregion
+
+        private void btnPathCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(objItemFolder.Path);
+        }
     }
 }

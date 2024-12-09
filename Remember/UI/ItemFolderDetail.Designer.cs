@@ -85,6 +85,7 @@
             txtPath = new TextBox();
             btnUp = new Button();
             objToolTips = new ToolTip(components);
+            btnPathCopy = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvFiles).BeginInit();
             SuspendLayout();
             // 
@@ -642,12 +643,23 @@
             btnUp.UseVisualStyleBackColor = true;
             btnUp.Click += btnUp_Click;
             // 
+            // btnPathCopy
+            // 
+            btnPathCopy.Image = (Image)resources.GetObject("btnPathCopy.Image");
+            btnPathCopy.Location = new Point(8, 65);
+            btnPathCopy.Name = "btnPathCopy";
+            btnPathCopy.Size = new Size(33, 23);
+            btnPathCopy.TabIndex = 54;
+            btnPathCopy.UseVisualStyleBackColor = true;
+            btnPathCopy.Click += btnPathCopy_Click;
+            // 
             // ItemFolderDetail
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Gainsboro;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(btnPathCopy);
             Controls.Add(btnUp);
             Controls.Add(txtPath);
             Controls.Add(lblPath);
@@ -766,5 +778,6 @@
         private TextBox txtPath;
         private Button btnUp;
         private ToolTip objToolTips;
+        private Button btnPathCopy;
     }
 }

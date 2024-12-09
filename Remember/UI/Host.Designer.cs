@@ -46,13 +46,17 @@
             objToolTips = new ToolTip(components);
             tmrReminders = new System.Windows.Forms.Timer(components);
             btnRootFolderBack = new Button();
+            btnPathFilterClear = new Button();
+            lblPathFilter = new Label();
+            txtPathFilter = new TextBox();
+            tmrFilterRefresh = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)dgvFolders).BeginInit();
             SuspendLayout();
             // 
             // dgvFolders
             // 
             dgvFolders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFolders.Location = new Point(10, 99);
+            dgvFolders.Location = new Point(10, 128);
             dgvFolders.Name = "dgvFolders";
             dgvFolders.RowHeadersWidth = 51;
             dgvFolders.Size = new Size(971, 512);
@@ -62,7 +66,7 @@
             // btnRefresh
             // 
             btnRefresh.Image = (Image)resources.GetObject("btnRefresh.Image");
-            btnRefresh.Location = new Point(88, 67);
+            btnRefresh.Location = new Point(88, 96);
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(33, 25);
             btnRefresh.TabIndex = 4;
@@ -119,7 +123,7 @@
             // 
             // txtQueryString
             // 
-            txtQueryString.Location = new Point(88, 38);
+            txtQueryString.Location = new Point(88, 67);
             txtQueryString.Name = "txtQueryString";
             txtQueryString.Size = new Size(560, 23);
             txtQueryString.TabIndex = 3;
@@ -128,7 +132,7 @@
             // lblQueryString
             // 
             lblQueryString.AutoSize = true;
-            lblQueryString.Location = new Point(11, 41);
+            lblQueryString.Location = new Point(11, 70);
             lblQueryString.Name = "lblQueryString";
             lblQueryString.Size = new Size(42, 15);
             lblQueryString.TabIndex = 9;
@@ -138,7 +142,7 @@
             // 
             lblQueryErrorText.AutoSize = true;
             lblQueryErrorText.ForeColor = Color.Maroon;
-            lblQueryErrorText.Location = new Point(205, 72);
+            lblQueryErrorText.Location = new Point(205, 101);
             lblQueryErrorText.Name = "lblQueryErrorText";
             lblQueryErrorText.Size = new Size(85, 15);
             lblQueryErrorText.TabIndex = 100;
@@ -148,7 +152,7 @@
             // btnQueryClear
             // 
             btnQueryClear.Image = (Image)resources.GetObject("btnQueryClear.Image");
-            btnQueryClear.Location = new Point(654, 37);
+            btnQueryClear.Location = new Point(654, 66);
             btnQueryClear.Name = "btnQueryClear";
             btnQueryClear.Size = new Size(33, 25);
             btnQueryClear.TabIndex = 101;
@@ -158,7 +162,7 @@
             // btnSaveQuery
             // 
             btnSaveQuery.Image = (Image)resources.GetObject("btnSaveQuery.Image");
-            btnSaveQuery.Location = new Point(166, 67);
+            btnSaveQuery.Location = new Point(166, 96);
             btnSaveQuery.Name = "btnSaveQuery";
             btnSaveQuery.Size = new Size(33, 25);
             btnSaveQuery.TabIndex = 102;
@@ -168,7 +172,7 @@
             // btnLoadQuery
             // 
             btnLoadQuery.Image = (Image)resources.GetObject("btnLoadQuery.Image");
-            btnLoadQuery.Location = new Point(127, 67);
+            btnLoadQuery.Location = new Point(127, 96);
             btnLoadQuery.Name = "btnLoadQuery";
             btnLoadQuery.Size = new Size(33, 25);
             btnLoadQuery.TabIndex = 103;
@@ -191,11 +195,46 @@
             btnRootFolderBack.Visible = false;
             btnRootFolderBack.Click += btnRootFolderBack_Click;
             // 
+            // btnPathFilterClear
+            // 
+            btnPathFilterClear.Image = (Image)resources.GetObject("btnPathFilterClear.Image");
+            btnPathFilterClear.Location = new Point(654, 37);
+            btnPathFilterClear.Name = "btnPathFilterClear";
+            btnPathFilterClear.Size = new Size(33, 25);
+            btnPathFilterClear.TabIndex = 107;
+            btnPathFilterClear.UseVisualStyleBackColor = true;
+            btnPathFilterClear.Click += btnPathFilterClear_Click;
+            // 
+            // lblPathFilter
+            // 
+            lblPathFilter.AutoSize = true;
+            lblPathFilter.Location = new Point(11, 41);
+            lblPathFilter.Name = "lblPathFilter";
+            lblPathFilter.Size = new Size(36, 15);
+            lblPathFilter.TabIndex = 106;
+            lblPathFilter.Text = "Filter:";
+            // 
+            // txtPathFilter
+            // 
+            txtPathFilter.Location = new Point(88, 38);
+            txtPathFilter.Name = "txtPathFilter";
+            txtPathFilter.Size = new Size(560, 23);
+            txtPathFilter.TabIndex = 105;
+            txtPathFilter.TextChanged += txtPathFilter_TextChanged;
+            // 
+            // tmrFilterRefresh
+            // 
+            tmrFilterRefresh.Interval = 700;
+            tmrFilterRefresh.Tick += tmrFilterRefresh_Tick;
+            // 
             // Host
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1604, 768);
+            Controls.Add(btnPathFilterClear);
+            Controls.Add(lblPathFilter);
+            Controls.Add(txtPathFilter);
             Controls.Add(btnRootFolderBack);
             Controls.Add(btnLoadQuery);
             Controls.Add(btnSaveQuery);
@@ -239,5 +278,9 @@
         private ToolTip objToolTips;
         private System.Windows.Forms.Timer tmrReminders;
         private Button btnRootFolderBack;
+        private Button btnPathFilterClear;
+        private Label lblPathFilter;
+        private TextBox txtPathFilter;
+        private System.Windows.Forms.Timer tmrFilterRefresh;
     }
 }
